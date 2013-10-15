@@ -1,0 +1,431 @@
+%% joser_template.tex
+%% V1
+%% 2008/12/15
+%% by Davide Brugali
+%% This is a skeleton file demonstrating the use of joser1.cls
+%% with a JOSER paper
+%%
+%% This file is a modified version of bare_jrnl_compsoc.tex V1.3
+%% by Michael Shell for IEEE CS journal papers
+%% http://www.michaelshell.org/
+%%
+%%*************************************************************************
+%% Legal Notice:
+%% This code is offered as-is without any warranty either expressed or
+%% implied; without even the implied warranty of MERCHANTABILITY or
+%% FITNESS FOR A PARTICULAR PURPOSE!
+%% User assumes all risk.
+%% In no event shall JOSER or any contributor to this code be liable for
+%% any damages or losses, including, but not limited to, incidental,
+%% consequential, or any other damages, resulting from the use or misuse
+%% of any information contained here.
+%%
+%% This work is distributed under the LaTeX Project Public License (LPPL)
+%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
+%% distributed and modified. A copy of the LPPL, version 1.3, is included
+%% in the base LaTeX documentation of all distributions of LaTeX released
+%% 2003/12/01 or later.
+%% Retain all contribution notices and credits.
+%% ** Modified files should be clearly indicated as such, including  **
+%% ** renaming them and changing author support contact information. **
+%%
+%%*************************************************************************
+
+\documentclass[10pt,journal,compsoc]{joser1}
+
+% *** GRAPHICS RELATED PACKAGES ***
+%
+\ifCLASSINFOpdf
+   \usepackage[pdftex]{graphicx}
+\else
+   \usepackage[dvips]{graphicx}
+\fi
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%% will be inserted by the editor %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\journalnumber{1}                       %will be inserted by the editor
+\journalvolume{1}                       %will be inserted by the editor
+\journalmonth{September}                %will be inserted by the editor
+\journalyear{2009}                      %will be inserted by the editor
+\articlefirstpage{123}                  %will be inserted by the editor
+\articlelastpage{126}                   %will be inserted by the editor
+\setcounter{page}{123}                  %will be inserted by the editor
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\copyrightauthor{F. Author, S. Author, T. Author}
+\headoddname{F. A. AUTHOR et al./ Preparation of Papers for {\sl Journal of Software Engineering for Robotics}}%
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+% paper title
+\title{Preparation of Papers for \\\vskip 0.3\baselineskip Journal of Software Engineering for Robotics}
+
+\author{
+First-Aa AUTHOR$^{1,*}$
+\qquad
+Second-Bb AUTHOR$^{1,2}$
+\qquad
+Third AUTHOR$^2$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%% will be inserted by the editor %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thanks{{\bf Regular paper} -- Manuscript received April 19, 2009;
+revised July 11, 2009.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\IEEEcompsocitemizethanks{\IEEEcompsocthanksitem This work was
+supported by xxxxxxxx (No.xxxxxxxx) (sponsor and financial support
+acknowledgment goes here).\protect\\
+
+\IEEEcompsocthanksitem Authors retain copyright to their papers
+and grant JOSER unlimited rights to publish the paper
+electronically and in hard copy. Use
+of the article is permitted as long as the author(s) and the journal are properly
+acknowledged.}
+
+} % end author
+
+\address{
+$^1$ Department of Computer Science, University of Bergamo,
+Dalmine 24044, Italy\\
+$^2$ Department of Computing and Electronic Systems, University of
+Essex Colchester CO43SQ, UK }
+
+
+% The paper headers
+\markboth
+
+\IEEEcompsoctitleabstractindextext{%
+\begin{abstract}
+An abstract should be a concise summary of the
+significant items in the paper, including the results and
+conclusions. It should be not more than about 500 words. Define all nonstandard symbols,
+abbreviations and acronyms used in the abstract. Do not cite
+references in the abstract.
+
+A list of significant keywords (2 minimum, 5 recommended) should
+be included in the first page of each submitted paper. Keywords
+must be chosen from those predefined within the IEEE RAS subject
+areas (\url{http://www.ieee-ras.org/uploads/tro/T-RO\_Keywords.pdf}) or
+the IEEE CS subsject area
+(\url{http://www.computer.org/portal/pages/ieeecs/publications/author/keywords/ACMtaxonomy.html}).
+
+\end{abstract}
+
+\begin{IEEEkeywords}
+Computer Society, JOSER, journal, \LaTeX, paper, template.
+\end{IEEEkeywords}}
+
+
+% make the title area
+\maketitle
+
+
+\section{Introduction}
+% The very first letter is a 2 line initial drop letter followed
+% by the rest of the first word in caps.
+\IEEEPARstart{T}{he} {\sl Journal of Software Engineering for
+Robotics} (JOSER) is a peer-reviewed journal that publishes two
+issues a year in March and September. It aims at disseminating
+high quality scientific and technological research results in the
+area of robot software development. It publishes both empirical
+research papers, where the effectiveness in the Robotics domain of
+existing Software Engineering approaches and methods is evaluated
+and demonstrated, as well as theoretical contributions that
+present new Robotic-specific software development conceptual
+tools.
+
+Possible topics for papers submitted to the journal include but
+are not limited to:
+\begin{itemize}
+    \item Analysis of issues and challenges in the development of robot software systems, that make the robotic domain similar/different to other application domains (e.g. automotive, factory automation)
+    \item Identification of recurrent concepts, aspects, and requirements in robot software systems, that may lead to the definition of standard / common / unified specifications, design models, interfaces, protocols, and software libraries
+    \item Documentation of measures and procedures to evaluate software quality factors
+    \item Description of conceptual tools as well as software environments that simplify the design, implementation, and reuse of robot software systems.
+    \item Exploitation of software engineering conceptual tools (e.g. formal specification and verification methods) to cope with specific robotic requirements (e.g. fault tolerance, robustness, autonomy, real-time guarantee)
+    \item Experience reports and case studies of successful development of software systems for real robotic applications.
+\end{itemize}
+
+These instructions give you guidelines for preparing papers for
+JOSER. Download the LaTeX template files from the website
+\url{http://www.joser.org/public/download/josertex.zip} so you can use the
+templates to prepare your manuscript.
+
+\section{Editorial Policies}
+This journal provides immediate open access to its content on the
+principle that making research freely available to the public
+supports a greater global exchange of knowledge.
+Papers will be available on the JOSER Web portal as soon as they have been approved by the
+reviewers.
+
+\subsection{Type of papers}
+Submitted articles may be of three basic types:
+
+{\bf Regular papers}: Detailed discussion involving new
+research, applications or developments. There is no length limit
+on regular papers. The nominal length is 10 single-spaced, double
+column pages including figures and bibliography. However, it is
+recommended that papers not exceed 15 single-spaced, double column
+pages. Papers that exceed this recommended maximum length will
+still be considered, but might not be guaranteed editorial review
+or publication in a timely fashion.
+
+{\bf Short papers}: Brief presentations of new technical concepts
+and developments. Short papers should not exceed 6 single-spaced
+double column pages including figures and bibliography.
+
+{\bf Comments}: Comments are brief contributions that comment on
+previously published papers. These may include reports on
+
+\begin{itemize}
+    \item exploitation and validation of research results
+    \item interpretation of experimental data
+    \item opinions about open issues
+\end{itemize}
+Comments should equal 4 single-spaced double column pages (including reasonably sized figures and references).
+
+
+\subsection{Review criteria}
+Papers are reviewed and evaluated according to the following criteria.
+\begin{itemize}
+    \item Relevance. Descriptions of pure sensor processing, planning or control get a lower score than documentations of (1) software architectures that help to integrate these core aspects of robotics, (2) software requirements that have been taken into account (portability, reusability, maintainability, interoperability, etc.), (3) metrics and methods that allow to assess software quality factors of robotic systems, or (4) computational issues related to the implementation of robotics algorithms. Papers should report on what was learned in doing the work, rather than merely on what was done.
+    \item Significance. Descriptions of ad-hoc software library, framework, or middleware for specific robotic systems get a lower score that documentation of reuse/adaptation/reengineering of existing software artifacts. When appropriate, authors are encouraged to demonstrate the utility of their work on significant problems; any experiments reported should be     reproducible. Contributions to relevant standards, benchmarks, software patterns as well as their adoption in novel application contexts are positively evaluated.
+    \item Originality. The work cannot have been published previously or be pending publication in another journal, and submissions cannot be under review or be sent for review in any other journal. We will consider research that has been published, or is under consideration for publication at workshops or conferences. In these cases, we expect the JMLR submission to go into greater depth and extend the published results in a substantive way. Authors must notify JOSER about previous or pending conference publication at the time of submission.
+    \item Technical quality. Use of standard modeling languages (e.g. UML, SysML, Marte, AADL) is positively evaluated as well as motivation why existing standards are not sufficient for the authors’ purpose. All claims should be clearly articulated and supported either by empirical experiments or theoretical analyses.
+    \item Presentation. Papers must be concise and complete; manuscripts should be carefully proofread and polished. Submissions that do not meet these criteria may be returned unreviewed.
+\end{itemize}
+
+\subsection{Review process}
+JOSER has a commitment to rigorous yet rapid reviewing.
+\begin{enumerate}
+   \item When a paper is submitted to JOSER, it is first read by the Editor-in-Chief (EIC). If the EIC finds that the paper is very clearly below the standards of the journal or not in its scope, then the paper is rejected immediately, without written review.
+   \item The EIC then assigns the paper to an associated editor (AE) who has expertise in the area of the paper. If the AE finds that the paper is very likely to be rejected on full review, the AE will write a single short review explaining that position, and the paper will be rejected.
+   \item The AE then assigns the paper to three reviewers. The reviewers will include at least one specialist in Robotics area and at least one in Software Engineering. The reviewers will write detailed technical reviews of the paper, which are returned to the AE.
+   \item Possible decisions are Accept, Conditionally Accept, Revise and Resubmit, or Reject. Conditionally accepted papers may still require minor revisions, which will be checked by the AE. A resubmission reccomendation should not be interpreted as any sort of guarantee of acceptance upon resubmission.
+   \item Authors receive first notification of the publication decision within sixs weeks upon paper submission.
+\end{enumerate}
+
+\section{Publication principles}
+It is a condition of publication that manuscripts submitted to
+JOSER are original and have not been published elsewhere in
+English or any other language. Do not submit a reworked version of
+a paper you have submitted or published elsewhere. It is the obligation of the
+authors to cite relevant prior work. The submitting author is
+responsible for obtaining agreement of all coauthors and any
+consent required from sponsors before submitting a paper. JOSER
+strongly discourage courtesy authorship. It is not the
+responsibility of the Editors to confirm that
+each author approves the paper as submitted or even knows that
+his or her name is attached to it. Responsibility for the contents
+of the paper rests upon the authors and not upon JOSER.
+
+\section{Manuscript submission}
+Authors need to register with the journal prior to submitting, or if already registered can
+simply log in and begin the 5 step process.
+All submissions are acknowledged.
+
+% An example of a floating table. Note that the
+% \caption command should come BEFORE the table. Table text will default to
+% \footnotesize.
+% The \label must come after \caption.
+%
+\begin{table}[!t]
+\renewcommand{\arraystretch}{1.3}
+\caption{An Example of a Table}
+\label{table_example}
+\centering
+\begin{tabular}{|c||c|}
+\hline
+One & Two\\
+\hline
+Three & Four\\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Initial Submission}
+Articles must be submitted in PDF. Submissions should be typeset
+in 11 point font or larger, and should include all author contact
+information on the first page.
+
+Although not required for submission, we encourage authors to use
+the JOSER LaTeX style package (described hereafter).
+
+Articles may be accompanied by online supplemental material.
+(Note: if an online appendix contains source code, we will require
+you to sign a release form prior to publication freeing us from
+liability.)
+
+To submit a paper, please
+\begin{enumerate}
+   \item Prepare it in PDF.
+   \item Ensure that the file to be uploaded is less than 5Mb in size.
+   \item Ensure that the title page contains
+   \begin{itemize}
+          \item complete name, postal and e-mail address of the corresponding author;
+          \item an abstract that does not exceed 500 words
+          \item a list of minimum two keywords (five recommended)
+   \end{itemize}
+   \item Register, log in, and begin the 5 step process.
+\end{enumerate}
+
+\subsection{Camera-ready copies of accepted papers}
+To ensure that all articles published in the journal have a
+uniform appearance, all camera-ready copies of accepted papers are
+required to be typeset in LaTeX with the JOSER LaTeX style
+package.
+
+Camera-ready copies of accepted papers which do not adhere to JOSER author guidelines WILL NOT be published. Authors must submit camera-ready papers as zip files that include:
+\begin{enumerate}
+    \item a single source file author\_yyyymmdd.tex; do not include external .tex files; use the submission date
+    \item the bibliography file author\_yyyymmdd.bib (only for BibTeX users)
+    \item the collection of figures as jpg or png files author\_yyyymmdd\_f01.jpg, \_f02.jpg, etc.
+    \item the output file author\_yyyymmdd.pdf
+\end{enumerate}
+
+
+\section{Manuscript preparation}
+Manuscripts should include the following parts: title, authors$'$
+names, authors$'$ affiliations, abstract, keywords, text,
+acknowledgments (if necessary), collected references (e.g.
+~\cite{IJSEK1996:Stewart, SEER2007:Vaughan, ROBIO2006:Friedmann,
+SIMPAR2008:Petters} and ~\cite{JARS2006:Colon, IJAR2001:Zielinski,
+IEEE-TSE1997:Stewart, ICIAS2008:Spexard,
+IROS2003:Montemerlo}), short
+biography and the photographs of every author (above 600 dpi),
+tables and figures (above 600 dpi). Supplemental material should
+be briefly described in section "Appendixes".
+
+\subsection{Abbreviations and acronyms}
+Define abbreviations and acronyms the first time they are used in
+the text, even after they have already been defined in the abstract
+or keywords. Abbreviations such as IEEE, SI, etc., do not have
+to be defined. Abbreviations that incorporate periods should not
+have spaces: write ``C.N.R.S.,'' not ``C.\ N.\ R.\ S.''
+
+
+\subsection{Figures and tables}
+Please verify that the figures and tables you mention in the text actually exist.
+
+Every figure must have a caption that is complete and intelligible
+in itself without reference to the text.
+
+The preferred format is jpg for figures
+with a minimum resolution of 600 dpi (dots per inch).
+The description style of the figures is specified as ``Time New
+Roman 8pt-12pt''. Figures can be in color or grayscale.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=2.5in]{figure}
+\caption{It is good practice to explain the significance
+of the figure in the caption}
+\label{fig:afigure}
+\end{figure}
+
+
+\section{Conclusion}
+Typical functions of the conclusion of a scientific paper include 1)
+summing up, 2) a statement of conclusions, 3) a statement of
+recommendations, and 4) a graceful termination. Any one of these, or
+any combination, may be appropriate for a particular paper. Some
+papers do not need a separate concluding section, particularly if
+the conclusions have already been stated in the introduction.
+
+\section*{Supplemental material}
+JOSER accepts supplemental materials for review and publication with regular paper submissions.
+
+Types of supplemental material include:
+\begin{itemize}
+    \item proofs
+    \item code
+    \item experimental data
+    \item Graphics should be in JPEG, GIF, PNG, or TIFF format.
+    \item Movies/Animations: .MOV, .AVI, .QT. MPEG files acceptable, QuickTime 3 format preferred, under 4 minutes in length, 320x240 pixels. File size must be minimized and download time must be considered. We recommend files not exceed 30 MB. Files larger than this may be returned for modification to make them smaller.
+\end{itemize}
+
+If you intend to submit supplemental material, please describe it
+shortly in this section.
+
+
+\section*{Acknowledgments}
+The authors would like to thank...
+
+
+% references section
+\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+\bibliography{IEEEabrv,joser13}
+
+
+% biography section
+\begin{IEEEbiography}[{author}]{First Author}
+received his B.\,Sc. and
+M.\,Sc. degrees in mechanical engineering from the *** University,
+in 1977 and 1984, respectively, and the Ph.\,D. degree in
+computing from *** University, in 1992. In 1994, he was a
+faculty member at *** University and in 1996 at ***
+University. Currently, he is a professor in the Department of
+Information System Engineering at *** University.
+He has published about 100 refereed journal and conference papers.
+His research interest covers robotics, software engineering, and distributed systems.
+Prof. Author received research award from Science Foundation, and
+the Best Paper Award of the XX International Conference in 2000 and
+2006, respectively. He is a member of ACM and IEEE.
+\end{IEEEbiography}
+
+\begin{IEEEbiography}[{author}]{Second Author}
+received his B.\,Sc. and
+M.\,Sc. degrees in mechanical engineering from the *** University,
+in 1977 and 1984, respectively, and the Ph.\,D. degree in
+computing from *** University, in 1992. In 1994, he was a
+faculty member at *** University and in 1996 at ***
+University. Currently, he is a professor in the Department of
+Information System Engineering at *** University.
+He has published about 100 refereed journal and conference papers.
+His research interest covers robotics, software engineering, and distributed systems.
+Prof. Author received research award from Science Foundation, and
+the Best Paper Award of the XX International Conference in 2000 and
+2006, respectively. He is a member of ACM and IEEE.
+\end{IEEEbiography}
+
+
+\begin{IEEEbiography}[{author}]{Third Author}
+received his B.\,Sc. and
+M.\,Sc. degrees in mechanical engineering from the *** University,
+in 1977 and 1984, respectively, and the Ph.\,D. degree in
+computing from *** University, in 1992. In 1994, he was a
+faculty member at *** University and in 1996 at ***
+University. Currently, he is a professor in the Department of
+Information System Engineering at *** University.
+He has published about 100 refereed journal and conference papers.
+His research interest covers robotics, software engineering, and distributed systems.
+Prof. Author received research award from Science Foundation, and
+the Best Paper Award of the XX International Conference in 2000 and
+2006, respectively. He is a member of ACM and IEEE.
+\end{IEEEbiography}
+
+% insert where needed to balance the two columns on the last page with
+% biographies
+
+% You can push biographies down or up by placing
+% a \vfill before or after them. The appropriate
+% use of \vfill depends on what kind of text is
+% on the last page and whether or not the columns
+% are being equalized.
+
+\vfill
+
+% Can be used to pull up biographies so that the bottom of the last one
+% is flush with the other column.
+%\enlargethispage{-5in}
+
+% that's all folks
+\end{document}
