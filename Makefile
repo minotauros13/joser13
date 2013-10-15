@@ -65,7 +65,7 @@ joser13.bbl: joser13.bib joser13.aux noPercent.awk
 	mv joser13.tmp $@
 
 dist:
-	$(GIT) archive --format=tar --prefix=joser13/ HEAD | $(BZIP2)
+	$(GIT) archive --format=tar --prefix=joser13/ HEAD | $(BZIP2) > joser13.tar.bz2
 
 clean:
 	rm -Rf *.pdf *.eps *.pstex_t *.ps *.ps.gz *.bbl *.log *.aux *.tmp \
