@@ -48,7 +48,7 @@ pdf: joser13.pdf
 
 # foils: foils.pdf
 
-joser13.pdf: joser13.tex joser13.bbl joser13.tpt IEEEtran.bst joser1.cls IEEEabrv.bib
+joser13.pdf: joser13.tex joser13.bbl joser13.tpt IEEEtran.bst joser13.cls IEEEabrv.bib
 	$(PDFLATEX) $<
 	$(THUMBPDF) --modes=pdftex $@
 	$(PDFFONTS) $@
