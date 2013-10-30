@@ -6,6 +6,7 @@
 \usepackage{amsthm}
 \usepackage{amssymb}
 \usepackage[square,numbers]{natbib}
+\usepackage[footnote]{acronym}
 \usepackage{dsfont}
 \usepackage{pifont} % http://www.imsc.res.in/Computer/symbols-letter.pdf
 \usepackage[pdftex]{thumbpdf}
@@ -47,6 +48,10 @@
 \newcommand{\tbl}[1]{Table~\ref{tbl:#1}}
 \newcommand{\lst}[1]{Listing~\ref{lst:#1}}
 
+\acrodef{DSL}{domain specific language}
+\acrodef{LOC}{lines of code}
+\acrodef{REPL}{read-eval-print loop}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%% will be inserted by the editor %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -85,7 +90,6 @@ Balasundram P. Amavasai$^{3}$
 revised July 11, 2009.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 \IEEEcompsocitemizethanks{\IEEEcompsocthanksitem This work was partially funded by the
 EPSRC Nanorobotics grant and a student bursary by the
 Materials and Engineering Research Institute at Sheffield Hallam University.\protect\\
@@ -112,6 +116,8 @@ $^3$ 96 Brooksby Road, Reading R31 6LY, United Kingdom}
 \begin{abstract}
   $\ldots$
 \end{abstract}
+
+\acresetall % repeat definitions even if introduced in abstract already
 
 % 2-5 keywords from http://www.ieee-ras.org/uploads/tro/T-RO\_Keywords.pdf
 % or http://www.computer.org/portal/pages/ieeecs/publications/author/keywords/ACMtaxonomy.html
@@ -142,9 +148,9 @@ in a single architecture (see \fig{triangle}).
    \end{center}
 \end{figure}
 
-Scripting languages offer a great productivity advantage and the productivity of programmer's measured in LOC\footnote{lines of code} per hour seems to be independent of the programming language\citep{prechelt2000empirical}. However performance is critical when implementing a machine vision system. \emph{I.e.} when prototyping a machine vision system using a scripting language such as Octave (productivity \& generality), it is usually necessary to later port it to a compiled language such as C/C++ (performance \& generality) to implement the final system.
+Scripting languages offer a great productivity advantage and the productivity of programmer's measured in \ac{LOC} per hour seems to be independent of the programming language\citep{prechelt2000empirical}. However performance is critical when implementing a machine vision system. \emph{I.e.} when prototyping a machine vision system using a scripting language such as Octave (productivity \& generality), it is usually necessary to later port it to a compiled language such as C/C++ (performance \& generality) to implement the final system.
 
-Today's desktop software is dominated by complex software systems which cannot be understood by a single person any more. However most of this complexity can be shown to be "accidental" rather than inherent\citep{ohshima2013kscript}. Using DSLs\footnote{domain specific languages}, one can keep the size of software systems (measured in LOC) \emph{orders of magnitudes} smaller and thus more manageable\citep{kay2010steps}.
+Today's desktop software is dominated by complex software systems which cannot be understood by a single person any more. However most of this complexity can be shown to be "accidental" rather than inherent\citep{ohshima2013kscript}. Using \acp{DSL}, one can keep the size of software systems (measured in LOC) \emph{orders of magnitudes} smaller and thus more manageable\citep{kay2010steps}.
 
 In this paper we are going to show how the Ruby programming language (which has strong support for DSLs) can help to reduce accidental complexity when implementing real-time machine vision software.
 
@@ -162,9 +168,13 @@ Ruby has support for \emph{meta-programming}. In particular
 \begin{itemize}
   \item \code{methods} returns an object's list of available methods
   \item \code{define\_method} defines a method at runtime
-  \item \code{method\_missing} traps calls to nonexistent functions
+  \item \code{method\_missing} traps calls to nonexistent methods
   \item \code{send} dynamically calls a method
 \end{itemize}
+
+\ac{REPL}
+\ac{REPL}
+\ac{REPL}
 
 % empirical evidence for productivity (LOC, structural complexity)
 % theoretical contribution: generic operations, more fundamental understanding of computer vision
