@@ -48,8 +48,9 @@ pdf: joser13.pdf
 
 # foils: foils.pdf
 
-joser13.pdf: joser13.tex joser13.bbl joser13.tpt IEEEtran.bst joser13.cls IEEEabrv.bib \
-	triangle.pdf
+joser13.pdf: joser13.tex joser13.bbl joser13.tpt \
+	IEEEtran.bst joser13.cls IEEEabrv.bib \
+	triangle.pdf wedekind.jpg
 	$(PDFLATEX) $<
 	$(THUMBPDF) --modes=pdftex $@
 	$(PDFFONTS) $@
