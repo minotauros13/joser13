@@ -110,21 +110,21 @@ Balasundram P. Amavasai$^{3}$
 revised July 11, 2009.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\IEEEcompsocitemizethanks{\IEEEcompsocthanksitem This work was partially funded by the
-EPSRC Nanorobotics grant and a student bursary by the
-Materials and Engineering Research Institute at Sheffield Hallam University.\protect\\
+\IEEEcompsocitemizethanks{\IEEEcompsocthanksitem This work was partially funded
+  by the EPSRC Nanorobotics grant and a student bursary by the Materials and 
+  Engineering Research Institute at Sheffield Hallam University.\protect\\
 
-\IEEEcompsocthanksitem Authors retain copyright to their papers
-and grant JOSER unlimited rights to publish the paper
-electronically and in hard copy. Use
-of the article is permitted as long as the author(s) and the journal are properly
-acknowledged.}
+  \IEEEcompsocthanksitem Authors retain copyright to their papers
+  and grant JOSER unlimited rights to publish the paper electronically and in
+  hard copy. Use of the article is permitted as long as the author(s) and the
+  journal are properly acknowledged.}
 
 } % end author
 
 \address{
 $^1$ 7 William Road, Sutton SM1 4QT, United Kingdom\\
-$^2$ Computational Vision and Robotics Laboratory, Foundation for Reasearch and Technology - Hellas, GR71110 Heraklion, Crete, Greece\\
+$^2$ Computational Vision and Robotics Laboratory, Foundation for Reasearch and
+Technology - Hellas, GR71110 Heraklion, Crete, Greece\\
 $^3$ 96 Brooksby Road, Reading R31 6LY, United Kingdom}
 
 % The paper headers
@@ -154,7 +154,9 @@ Computer Society, JOSER, journal, \LaTeX, paper, template.
 \section{Introduction}
 % The very first letter is a 2 line initial drop letter followed
 % by the rest of the first word in caps.
-\IEEEPARstart{M}{achine} vision is an important part of the interdisciplinary field of robotics. Developers of programming systems in general and machine vision software in particular face the challenge of bringing together
+\IEEEPARstart{M}{achine} vision is an important part of the interdisciplinary
+field of robotics. Developers of programming systems in general and machine
+vision software in particular face the challenge of bringing together
 \begin{itemize}
   \item performance
   \item productivity
@@ -164,18 +166,35 @@ in a single architecture (see \fig{triangle}).
 \begin{figure}[htbp]
    \begin{center}
      \resizebox{.5\columnwidth}{!}{\includegraphics{triangle}}\\
-     \caption{The main requirements when designing a programming language or system \citep{wolczko2011}\label{fig:triangle}}
+     \caption{The main requirements when designing a programming language or
+     system \citep{wolczko2011}\label{fig:triangle}}
    \end{center}
 \end{figure}
 
-Scripting languages offer a great productivity advantage and the productivity of programmer's measured in \ac{LOC} per hour seems to be independent of the programming language\citep{prechelt2000empirical}. However performance is critical when implementing a machine vision system. \emph{I.e.} when prototyping a machine vision system using a scripting language such as Octave (productivity \& generality), it is usually necessary to later port it to a compiled language such as C/C++ (performance \& generality) to implement the final system.
+Scripting languages offer a great productivity advantage and the productivity
+of programmer's measured in \ac{LOC} per hour seems to be independent of the
+programming language\citep{prechelt2000empirical}. However performance is
+critical when implementing a machine vision system. \emph{I.e.} when
+prototyping a machine vision system using a scripting language such as Octave
+(productivity \& generality), it is usually necessary to later port it to a
+compiled language such as C/C++ (performance \& generality) to implement the
+final system.
 
-Today's desktop software is dominated by complex software systems which cannot be understood by a single person any more. However most of this complexity can be shown to be "accidental" rather than inherent\citep{ohshima2013kscript}. Using \acp{DSL}, one can keep the size of software systems (measured in LOC) \emph{orders of magnitudes} smaller and thus more manageable\citep{kay2010steps}.
+Today's desktop software is dominated by complex software systems which cannot
+be understood by a single person any more. However most of this complexity can
+be shown to be "accidental" rather than inherent\citep{ohshima2013kscript}.
+Using \acp{DSL}, one can keep the size of software systems (measured in LOC)
+\emph{orders of magnitudes} smaller and thus more
+manageable\citep{kay2010steps}.
 
-In this paper we are going to show how the Ruby programming language (which has strong support for DSLs) can help to reduce accidental complexity when implementing real-time machine vision software.
+In this paper we are going to show how the Ruby programming language (which has
+strong support for DSLs) can help to reduce accidental complexity when
+implementing real-time machine vision software.
 
 \section{Ruby Programming Language}
-The Ruby programming language\footnote{\url{http://www.ruby-lang.org/}} is an \emph{interpreted language}. It uses a \emph{mark-and-sweep} garbage collector for memory management. Important features of the programming language are
+The Ruby programming language\footnote{\url{http://www.ruby-lang.org/}} is an
+\emph{interpreted language}. It uses a \emph{mark-and-sweep} garbage collector
+for memory management. Important features of the programming language are
 \begin{itemize}
   \item \emph{late binding}
   \item \emph{closures}
@@ -192,7 +211,9 @@ Ruby has support for \emph{meta-programming}. In particular
   \item \code{send} dynamically calls a method
 \end{itemize}
 
-\ac{MRI} (the reference implementation of Ruby) comes with tool called the \ac{IRB}. \ac{IRB} is a \ac{REPL} for the Ruby programming language. \fig{repl} shows an example of an \ac{IRB} session.
+\ac{MRI} (the reference implementation of Ruby) comes with tool called the
+\ac{IRB}. \ac{IRB} is a \ac{REPL} for the Ruby programming language. \fig{repl}
+shows an example of an \ac{IRB} session.
 
 \begin{figure}[htbp]
   \begin{center}
@@ -208,10 +229,12 @@ x = 5
 \end{figure}
 
 % empirical evidence for productivity (LOC, structural complexity)
-% theoretical contribution: generic operations, more fundamental understanding of computer vision
+% theoretical contribution: generic operations, more fundamental understanding
+% of computer vision
 
-% Ruby: Interactive Ruby, inspect, coerce, numerical library, unit testing, (Const.new)
-% MRI: single threaded (JRuby?, Rubinius?), meta-programming does not cover control statements (while, if, ...)
+% Ruby: Interactive Ruby, inspect, coerce, numerical library, unit testing,
+% (Const.new) MRI: single threaded (JRuby?, Rubinius?), meta-programming does
+% not cover control statements (while, if, ...)
 
 % Closures $\Rightarrow$ custom control structures! (video input)
 
@@ -219,22 +242,37 @@ x = 5
 
 % Integration
 
-% JIT compilation (using GCC): fetch, construct, store, coerce, coercion, descriptor, dup,
-% compilable?, strip, get, assign, write, storage\_size, memory\_type, default, inspect
+% JIT compilation (using GCC): fetch, construct, store, coerce, coercion,
+% descriptor, dup, compilable?, strip, get, assign, write, storage\_size,
+% memory\_type, default, inspect
 
 % fast development cycle
 
-% maximally generic (binary operations (no subset of integer types), histograms, tensor operations, luts/warps, map (unary operation), inject, mask/unmask (larrabee), integral, convolution)
+% maximally generic (binary operations (no subset of integer types),
+% histograms, tensor operations, luts/warps, map (unary operation), inject,
+% mask/unmask (larrabee), integral, convolution)
 
 % Possible topics for papers submitted to the journal include but
 % are not limited to:
 % \begin{itemize}
-%     \item Analysis of issues and challenges in the development of robot software systems, that make the robotic domain similar/different to other application domains (e.g. automotive, factory automation)
-%     \item Identification of recurrent concepts, aspects, and requirements in robot software systems, that may lead to the definition of standard / common / unified specifications, design models, interfaces, protocols, and software libraries
-%     \item Documentation of measures and procedures to evaluate software quality factors
-%     \item Description of conceptual tools as well as software environments that simplify the design, implementation, and reuse of robot software systems.
-%     \item Exploitation of software engineering conceptual tools (e.g. formal specification and verification methods) to cope with specific robotic requirements (e.g. fault tolerance, robustness, autonomy, real-time guarantee)
-%     \item Experience reports and case studies of successful development of software systems for real robotic applications.
+%     \item Analysis of issues and challenges in the development of robot
+%     software systems, that make the robotic domain similar/different to other
+%     application domains (e.g. automotive, factory automation)
+%     \item Identification of recurrent concepts, aspects, and requirements in
+%     robot software systems, that may lead to the definition of standard /
+%     common / unified specifications, design models, interfaces, protocols,
+%     and software libraries
+%     \item Documentation of measures and procedures to evaluate software
+%     quality factors
+%     \item Description of conceptual tools as well as software environments
+%     that simplify the design, implementation, and reuse of robot software
+%     systems.
+%     \item Exploitation of software engineering conceptual tools (e.g. formal
+%     specification and verification methods) to cope with specific robotic
+%     requirements (e.g. fault tolerance, robustness, autonomy, real-time
+%     guarantee)
+%     \item Experience reports and case studies of successful development of
+%     software systems for real robotic applications.
 % \end{itemize}
 %
 % These instructions give you guidelines for preparing papers for
@@ -246,8 +284,8 @@ x = 5
 % This journal provides immediate open access to its content on the
 % principle that making research freely available to the public
 % supports a greater global exchange of knowledge.
-% Papers will be available on the JOSER Web portal as soon as they have been approved by the
-% reviewers.
+% Papers will be available on the JOSER Web portal as soon as they have been
+% approved by the reviewers.
 %
 % \subsection{Type of papers}
 % Submitted articles may be of three basic types:
@@ -273,24 +311,45 @@ x = 5
 %     \item interpretation of experimental data
 %     \item opinions about open issues
 % \end{itemize}
-% Comments should equal 4 single-spaced double column pages (including reasonably sized figures and references).
+% Comments should equal 4 single-spaced double column pages (including
+% reasonably sized figures and references).
 
 
 %\subsection{Review criteria}
 %Papers are reviewed and evaluated according to the following criteria.
 %\begin{itemize}
-%    \item Relevance. Descriptions of pure sensor processing, planning or control get a lower score than documentations of (1) software architectures that help to integrate these core aspects of robotics, (2) software requirements that have been taken into account (portability, reusability, maintainability, interoperability, etc.), (3) metrics and methods that allow to assess software quality factors of robotic systems, or (4) computational issues related to the implementation of robotics algorithms. Papers should report on what was learned in doing the work, rather than merely on what was done.
+%    \item Relevance. Descriptions of pure sensor processing, planning or
+%    control get a lower score than documentations of (1) software
+%    architectures that help to integrate these core aspects of robotics, (2)
+%    software requirements that have been taken into account (portability,
+%    reusability, maintainability, interoperability, etc.), (3) metrics and
+%    methods that allow to assess software quality factors of robotic systems,
+%    or (4) computational issues related to the implementation of robotics
+%    algorithms. Papers should report on what was learned in doing the work,
+%    rather than merely on what was done.
 \section{$\ldots$}
 \begin{itemize}
-  \item Software architecture based on memory objects (Malloc) allows integration (no C++ "static" types).
-  \item Requirements: generic operators on n-dimensional arrays, high performance, binary operations on any element-type (including array), generic operators instead of monolithic implementations
+  \item Software architecture based on memory objects (Malloc) allows
+    integration (no C++ "static" types).
+  \item Requirements: generic operators on n-dimensional arrays, high
+    performance, binary operations on any element-type (including array),
+    generic operators instead of monolithic implementations
   \item Ruby allows for functional testing
   \item Using closures during camera initialisation and for displaying videos
 \end{itemize}
-%    \item Significance. Descriptions of ad-hoc software library, framework, or middleware for specific robotic systems get a lower score that documentation of reuse/adaptation/reengineering of existing software artifacts. When appropriate, authors are encouraged to demonstrate the utility of their work on significant problems; any experiments reported should be     reproducible. Contributions to relevant standards, benchmarks, software patterns as well as their adoption in novel application contexts are positively evaluated.
+%    \item Significance. Descriptions of ad-hoc software library, framework, or
+%    middleware for specific robotic systems get a lower score that
+%    documentation of reuse/adaptation/reengineering of existing software
+%    artifacts. When appropriate, authors are encouraged to demonstrate the
+%    utility of their work on significant problems; any experiments reported
+%    should be     reproducible. Contributions to relevant standards,
+%    benchmarks, software patterns as well as their adoption in novel
+%    application contexts are positively evaluated.
 \begin{itemize}
-  \item Integration of existing I/O libraries: ALSA, DC1394, FFMpeg, Kinect, OpenEXR, Qt4, RMagick, V4L2, Xorg
-  \item Integration with other libraries: FFTW3, libswscale, linalg, narray, opencv
+  \item Integration of existing I/O libraries: ALSA, DC1394, FFMpeg, Kinect,
+    OpenEXR, Qt4, RMagick, V4L2, Xorg
+  \item Integration with other libraries: FFTW3, libswscale, linalg, narray,
+    opencv
   \item Utility of the work: TODO
 \end{itemize}
 
@@ -303,13 +362,27 @@ x = 5
 % the conclusions have already been stated in the introduction.
 Clojure, Factor, STEPS project
 
-%    \item Originality. The work cannot have been published previously or be pending publication in another journal, and submissions cannot be under review or be sent for review in any other journal. We will consider research that has been published, or is under consideration for publication at workshops or conferences. In these cases, we expect the JMLR submission to go into greater depth and extend the published results in a substantive way. Authors must notify JOSER about previous or pending conference publication at the time of submission.
-%    \item Technical quality. Use of standard modeling languages (e.g. UML, SysML, Marte, AADL) is positively evaluated as well as motivation why existing standards are not sufficient for the authors’ purpose. All claims should be clearly articulated and supported either by empirical experiments or theoretical analyses.
-%    \item Presentation. Papers must be concise and complete; manuscripts should be carefully proofread and polished. Submissions that do not meet these criteria may be returned unreviewed.
+%    \item Originality. The work cannot have been published previously or be
+%    pending publication in another journal, and submissions cannot be under
+%    review or be sent for review in any other journal. We will consider
+%    research that has been published, or is under consideration for
+%    publication at workshops or conferences. In these cases, we expect the
+%    JMLR submission to go into greater depth and extend the published results
+%    in a substantive way. Authors must notify JOSER about previous or pending
+%    conference publication at the time of submission.
+%    \item Technical quality. Use of standard modeling languages (e.g. UML,
+%    SysML, Marte, AADL) is positively evaluated as well as motivation why
+%    existing standards are not sufficient for the authors’ purpose. All
+%    claims should be clearly articulated and supported either by empirical
+%    experiments or theoretical analyses.
+%    \item Presentation. Papers must be concise and complete; manuscripts
+%    should be carefully proofread and polished. Submissions that do not meet
+%    these criteria may be returned unreviewed.
 %\end{itemize}
 
 %\section{Manuscript submission}
-%Authors need to register with the journal prior to submitting, or if already registered can
+%Authors need to register with the journal prior to submitting, or if already
+%registered can
 %simply log in and begin the 5 step process.
 %All submissions are acknowledged.
 
@@ -351,7 +424,8 @@ Clojure, Factor, STEPS project
 %    \item Ensure that the file to be uploaded is less than 5Mb in size.
 %    \item Ensure that the title page contains
 %    \begin{itemize}
-%           \item complete name, postal and e-mail address of the corresponding author;
+%           \item complete name, postal and e-mail address of the corresponding
+%           author;
 %           \item an abstract that does not exceed 500 words
 %           \item a list of minimum two keywords (five recommended)
 %    \end{itemize}
@@ -364,11 +438,15 @@ Clojure, Factor, STEPS project
 % required to be typeset in LaTeX with the JOSER LaTeX style
 % package.
 %
-% Camera-ready copies of accepted papers which do not adhere to JOSER author guidelines WILL NOT be published. Authors must submit camera-ready papers as zip files that include:
+% Camera-ready copies of accepted papers which do not adhere to JOSER author
+% guidelines WILL NOT be published. Authors must submit camera-ready papers as
+% zip files that include:
 % \begin{enumerate}
-%     \item a single source file author\_yyyymmdd.tex; do not include external .tex files; use the submission date
+%     \item a single source file author\_yyyymmdd.tex; do not include external
+%     .tex files; use the submission date
 %     \item the bibliography file author\_yyyymmdd.bib (only for BibTeX users)
-%     \item the collection of figures as jpg or png files author\_yyyymmdd\_f01.jpg, \_f02.jpg, etc.
+%     \item the collection of figures as jpg or png files
+%     author\_yyyymmdd\_f01.jpg, \_f02.jpg, etc.
 %     \item the output file author\_yyyymmdd.pdf
 % \end{enumerate}
 %
@@ -393,7 +471,8 @@ Clojure, Factor, STEPS project
 %
 %
 % \subsection{Figures and tables}
-% Please verify that the figures and tables you mention in the text actually exist.
+% Please verify that the figures and tables you mention in the text actually
+% exist.
 %
 % Every figure must have a caption that is complete and intelligible
 % in itself without reference to the text.
@@ -413,7 +492,8 @@ Clojure, Factor, STEPS project
 %
 %
 % \section*{Supplemental material}
-% JOSER accepts supplemental materials for review and publication with regular paper submissions.
+% JOSER accepts supplemental materials for review and publication with regular
+% paper submissions.
 %
 % Types of supplemental material include:
 % \begin{itemize}
@@ -421,7 +501,11 @@ Clojure, Factor, STEPS project
 %     \item code
 %     \item experimental data
 %     \item Graphics should be in JPEG, GIF, PNG, or TIFF format.
-%     \item Movies/Animations: .MOV, .AVI, .QT. MPEG files acceptable, QuickTime 3 format preferred, under 4 minutes in length, 320x240 pixels. File size must be minimized and download time must be considered. We recommend files not exceed 30 MB. Files larger than this may be returned for modification to make them smaller.
+%     \item Movies/Animations: .MOV, .AVI, .QT. MPEG files acceptable,
+%     QuickTime 3 format preferred, under 4 minutes in length, 320x240 pixels.
+%     File size must be minimized and download time must be considered. We
+%     recommend files not exceed 30 MB. Files larger than this may be returned
+%     for modification to make them smaller.
 % \end{itemize}
 %
 % If you intend to submit supplemental material, please describe it
@@ -448,7 +532,8 @@ faculty member at *** University and in 1996 at ***
 University. Currently, he is a professor in the Department of
 Information System Engineering at *** University.
 He has published about 100 refereed journal and conference papers.
-His research interest covers robotics, software engineering, and distributed systems.
+His research interest covers robotics, software engineering, and distributed
+systems.
 Prof. Author received research award from Science Foundation, and
 the Best Paper Award of the XX International Conference in 2000 and
 2006, respectively. He is a member of ACM and IEEE.
@@ -463,7 +548,8 @@ faculty member at *** University and in 1996 at ***
 University. Currently, he is a professor in the Department of
 Information System Engineering at *** University.
 He has published about 100 refereed journal and conference papers.
-His research interest covers robotics, software engineering, and distributed systems.
+His research interest covers robotics, software engineering, and distributed
+systems.
 Prof. Author received research award from Science Foundation, and
 the Best Paper Award of the XX International Conference in 2000 and
 2006, respectively. He is a member of ACM and IEEE.
@@ -478,7 +564,8 @@ faculty member at *** University and in 1996 at ***
 University. Currently, he is a professor in the Department of
 Information System Engineering at *** University.
 He has published about 100 refereed journal and conference papers.
-His research interest covers robotics, software engineering, and distributed systems.
+His research interest covers robotics, software engineering, and distributed
+systems.
 Prof. Author received research award from Science Foundation, and
 the Best Paper Award of the XX International Conference in 2000 and
 2006, respectively. He is a member of ACM and IEEE.
