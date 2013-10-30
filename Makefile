@@ -48,7 +48,8 @@ pdf: joser13.pdf
 
 # foils: foils.pdf
 
-joser13.pdf: joser13.tex joser13.bbl joser13.tpt IEEEtran.bst joser13.cls IEEEabrv.bib
+joser13.pdf: joser13.tex joser13.bbl joser13.tpt IEEEtran.bst joser13.cls IEEEabrv.bib \
+	triangle.pdf
 	$(PDFLATEX) $<
 	$(THUMBPDF) --modes=pdftex $@
 	$(PDFFONTS) $@
@@ -118,8 +119,8 @@ clean:
 .png.jpg:
 	$(CONVERT) $< -quality 90 $@
 
-.svg.png:
-	$(INKSCAPE) $< -d 300 -e $@
+.svg.pdf:
+	$(INKSCAPE) $< -A $@
 
 %-70.jpg: %.png
 	$(CONVERT) $< -quality 70 $@

@@ -39,6 +39,14 @@
 \definecolor{codegray}{rgb}{0.3,0.3,0.3}
 \newcommand{\code}[1]{``\texttt{\textbf{\textcolor{codegray}{\small{#1}}}}''}
 
+\newcommand{\sct}[1]{Section~\ref{cha:#1}}
+\newcommand{\equ}[1]{Equation~\ref{equ:#1}}
+\newcommand{\anx}[1]{Appendix~\ref{cha:#1}}
+\newcommand{\fig}[1]{Figure~\ref{fig:#1}}
+% \newcommand{\plt}[1]{Figure~\ref{fig:#1}}
+\newcommand{\tbl}[1]{Table~\ref{tbl:#1}}
+\newcommand{\lst}[1]{Listing~\ref{lst:#1}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%% will be inserted by the editor %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -120,26 +128,28 @@ Computer Society, JOSER, journal, \LaTeX, paper, template.
 \section{Introduction}
 % The very first letter is a 2 line initial drop letter followed
 % by the rest of the first word in caps.
-\IEEEPARstart{T}{he} content $\ldots$ \citep{detect_grid, thesis_wedekind} Machine vision as part of robotics, software engineering required here
+\IEEEPARstart{M}{achine} vision is an important part of the interdisciplinary field of robotics. Developers of programming systems in general and machine vision software in particular face the challenge of bringing together
+\begin{itemize}
+  \item performance
+  \item productivity
+  \item generality
+\end{itemize}
+in a single architecture (see \fig{triangle}).
+\begin{figure}[!t]
+   \begin{center}
+     \resizebox{.5\columnwidth}{!}{\includegraphics{triangle}}\\
+     \caption{The main requirements when designing a programming language or system \citep{wolczko2011}\label{fig:triangle}}
+   \end{center}
+\end{figure}
 
-Ruby: Interactive Ruby, inspect, coerce, numerical library, unit testing, (Const.new)
-MRI: single threaded (JRuby?, Rubinius?), meta-programming does not cover control statements (while, if, ...)
+Scripting languages offer a great productivity advantage and the productivity of programmer's measured in LOC\footnote{lines of code} per hour seems to be independent of the programming language\citep{prechelt2000empirical}. However performance is critical when implementing a machine vision system. \emph{I.e.} when prototyping a machine vision system using a scripting language such as Octave (productivity \& generality), it is usually necessary to later port it to a compiled language such as C/C++ (performance \& generality) to implement the final system.
 
-Closures $\Rightarrow$ custom control structures!
+Today's desktop software is dominated by complex software systems which cannot be understood by a single person any more. However most of this complexity can be shown to be "accidental" rather than inherent\citep{ohshima2013kscript}. Using DSLs\footnote{domain specific languages}, one can keep the size of software systems (measured in LOC) \emph{orders of magnitudes} smaller and thus more manageable\citep{kay2010steps}.
 
-No architecture: don't impose a static datatype for representing images etc
-
-Integration
-
-JIT compilation (using GCC): fetch, construct, store, coerce, coercion, descriptor, dup,
-compilable?, strip, get, assign, write, storage\_size, memory\_type, default, inspect
-
-fast development cycle
-
-maximally generic (binary operations (no subset of integer types), histograms, tensor operations, luts/warps, map (unary operation), inject, mask/unmask (larrabee), integral, convolution)
+In this paper we are going to show how the Ruby programming language (which has strong support for DSLs) can help to reduce accidental complexity when implementing real-time machine vision software.
 
 \section{Ruby Programming Language}
-The Ruby programming language\footnote{http://www.ruby-lang.org/} is an \emph{interpreted language}. It uses a \emph{mark-and-sweep} garbage collector for memory management. Important features of the programming language are
+The Ruby programming language\footnote{\url{http://www.ruby-lang.org/}} is an \emph{interpreted language}. It uses a \emph{mark-and-sweep} garbage collector for memory management. Important features of the programming language are
 \begin{itemize}
   \item \emph{late binding}
   \item \emph{closures}
@@ -155,11 +165,25 @@ Ruby has support for \emph{meta-programming}. In particular
   \item \code{method\_missing} traps calls to nonexistent functions
   \item \code{send} dynamically calls a method
 \end{itemize}
-% empirical research papers, where the effectiveness in the Robotics domain of
-% existing Software Engineering approaches and methods is evaluated
-% and demonstrated, as well as theoretical contributions that
-% present new Robotic-specific software development conceptual
-% tools.
+
+% empirical evidence for productivity (LOC, structural complexity)
+% theoretical contribution: generic operations, more fundamental understanding of computer vision
+
+% Ruby: Interactive Ruby, inspect, coerce, numerical library, unit testing, (Const.new)
+% MRI: single threaded (JRuby?, Rubinius?), meta-programming does not cover control statements (while, if, ...)
+
+% Closures $\Rightarrow$ custom control structures! (video input)
+
+% No architecture: don't impose a static datatype for representing images etc
+
+% Integration
+
+% JIT compilation (using GCC): fetch, construct, store, coerce, coercion, descriptor, dup,
+co% mpilable?, strip, get, assign, write, storage\_size, memory\_type, default, inspect
+
+% fast development cycle
+
+% maximally generic (binary operations (no subset of integer types), histograms, tensor operations, luts/warps, map (unary operation), inject, mask/unmask (larrabee), integral, convolution)
 
 % Possible topics for papers submitted to the journal include but
 % are not limited to:
@@ -171,7 +195,7 @@ Ruby has support for \emph{meta-programming}. In particular
 %     \item Exploitation of software engineering conceptual tools (e.g. formal specification and verification methods) to cope with specific robotic requirements (e.g. fault tolerance, robustness, autonomy, real-time guarantee)
 %     \item Experience reports and case studies of successful development of software systems for real robotic applications.
 % \end{itemize}
-% 
+%
 % These instructions give you guidelines for preparing papers for
 % JOSER. Download the LaTeX template files from the website
 % \url{http://www.joser.org/public/download/josertex.zip} so you can use the
@@ -183,10 +207,10 @@ Ruby has support for \emph{meta-programming}. In particular
 % supports a greater global exchange of knowledge.
 % Papers will be available on the JOSER Web portal as soon as they have been approved by the
 % reviewers.
-% 
+%
 % \subsection{Type of papers}
 % Submitted articles may be of three basic types:
-% 
+%
 % {\bf Regular papers}: Detailed discussion involving new
 % research, applications or developments. There is no length limit
 % on regular papers. The nominal length is 10 single-spaced, double
@@ -195,14 +219,14 @@ Ruby has support for \emph{meta-programming}. In particular
 % pages. Papers that exceed this recommended maximum length will
 % still be considered, but might not be guaranteed editorial review
 % or publication in a timely fashion.
-% 
+%
 % {\bf Short papers}: Brief presentations of new technical concepts
 % and developments. Short papers should not exceed 6 single-spaced
 % double column pages including figures and bibliography.
-% 
+%
 % {\bf Comments}: Comments are brief contributions that comment on
 % previously published papers. These may include reports on
-% 
+%
 % \begin{itemize}
 %     \item exploitation and validation of research results
 %     \item interpretation of experimental data
@@ -271,15 +295,15 @@ Clojure, Factor, STEPS project
 % Articles must be submitted in PDF. Submissions should be typeset
 % in 11 point font or larger, and should include all author contact
 % information on the first page.
-% 
+%
 % Although not required for submission, we encourage authors to use
 % the JOSER LaTeX style package (described hereafter).
-% 
+%
 % Articles may be accompanied by online supplemental material.
 % (Note: if an online appendix contains source code, we will require
 % you to sign a release form prior to publication freeing us from
 % liability.)
-% 
+%
 % To submit a paper, please
 % \begin{enumerate}
 %    \item Prepare it in PDF.
@@ -292,13 +316,13 @@ Clojure, Factor, STEPS project
 %    \end{itemize}
 %    \item Register, log in, and begin the 5 step process.
 % \end{enumerate}
-% 
+%
 % \subsection{Camera-ready copies of accepted papers}
 % To ensure that all articles published in the journal have a
 % uniform appearance, all camera-ready copies of accepted papers are
 % required to be typeset in LaTeX with the JOSER LaTeX style
 % package.
-% 
+%
 % Camera-ready copies of accepted papers which do not adhere to JOSER author guidelines WILL NOT be published. Authors must submit camera-ready papers as zip files that include:
 % \begin{enumerate}
 %     \item a single source file author\_yyyymmdd.tex; do not include external .tex files; use the submission date
@@ -306,7 +330,7 @@ Clojure, Factor, STEPS project
 %     \item the collection of figures as jpg or png files author\_yyyymmdd\_f01.jpg, \_f02.jpg, etc.
 %     \item the output file author\_yyyymmdd.pdf
 % \end{enumerate}
-% 
+%
 % \section{Manuscript preparation}
 % Manuscripts should include the following parts: title, authors$'$
 % names, authors$'$ affiliations, abstract, keywords, text,
@@ -318,26 +342,26 @@ Clojure, Factor, STEPS project
 % biography and the photographs of every author (above 600 dpi),
 % tables and figures (above 600 dpi). Supplemental material should
 % be briefly described in section "Appendixes".
-% 
+%
 % \subsection{Abbreviations and acronyms}
 % Define abbreviations and acronyms the first time they are used in
 % the text, even after they have already been defined in the abstract
 % or keywords. Abbreviations such as IEEE, SI, etc., do not have
 % to be defined. Abbreviations that incorporate periods should not
 % have spaces: write ``C.N.R.S.,'' not ``C.\ N.\ R.\ S.''
-% 
-% 
+%
+%
 % \subsection{Figures and tables}
 % Please verify that the figures and tables you mention in the text actually exist.
-% 
+%
 % Every figure must have a caption that is complete and intelligible
 % in itself without reference to the text.
-% 
+%
 % The preferred format is jpg for figures
 % with a minimum resolution of 600 dpi (dots per inch).
 % The description style of the figures is specified as ``Time New
 % Roman 8pt-12pt''. Figures can be in color or grayscale.
-% 
+%
 % \begin{figure}[!t]
 % \centering
 % \includegraphics[width=2.5in]{figure}
@@ -345,11 +369,11 @@ Clojure, Factor, STEPS project
 % of the figure in the caption}
 % \label{fig:afigure}
 % \end{figure}
-% 
-% 
+%
+%
 % \section*{Supplemental material}
 % JOSER accepts supplemental materials for review and publication with regular paper submissions.
-% 
+%
 % Types of supplemental material include:
 % \begin{itemize}
 %     \item proofs
@@ -358,11 +382,11 @@ Clojure, Factor, STEPS project
 %     \item Graphics should be in JPEG, GIF, PNG, or TIFF format.
 %     \item Movies/Animations: .MOV, .AVI, .QT. MPEG files acceptable, QuickTime 3 format preferred, under 4 minutes in length, 320x240 pixels. File size must be minimized and download time must be considered. We recommend files not exceed 30 MB. Files larger than this may be returned for modification to make them smaller.
 % \end{itemize}
-% 
+%
 % If you intend to submit supplemental material, please describe it
 % shortly in this section.
-% 
-% 
+%
+%
 % \section*{Acknowledgments}
 % The authors would like to thank...
 
