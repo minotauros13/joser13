@@ -48,7 +48,7 @@ pdf: joser13.pdf
 
 # foils: foils.pdf
 
-joser13.pdf: joser13.tex joser13.bbl joser13.tpt \
+joser13.pdf: joser13.tex joser13.aux joser13.bbl joser13.tpt \
 	IEEEtran.bst joser13.cls IEEEabrv.bib \
 	triangle.pdf wedekind.jpg
 	$(PDFLATEX) $<
@@ -79,8 +79,9 @@ clean:
 
 # Emergency-rule for enabling creation of bibliography
 %.aux:
-	echo Aux-file $@ required! Rerun make after this build!
-	touch $@
+	echo '\\citation{undefined}' > $@
+	echo '\\bibstyle{IEEEtran}' >> $@
+	echo '\\bibdata{IEEEabrv,joser13}' >> $@
 
 .png.pnm:
 	$(CONVERT) $< -colorspace gray $@
