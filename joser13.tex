@@ -6,7 +6,7 @@
 \usepackage{amsthm}
 \usepackage{amssymb}
 \usepackage[square,numbers]{natbib}
-\usepackage[footnote]{acronym}
+\usepackage{acronym}
 \usepackage{dsfont}
 \usepackage{pifont} % http://www.imsc.res.in/Computer/symbols-letter.pdf
 \usepackage[pdftex]{thumbpdf}
@@ -48,10 +48,30 @@
 \newcommand{\tbl}[1]{Table~\ref{tbl:#1}}
 \newcommand{\lst}[1]{Listing~\ref{lst:#1}}
 
+\definecolor{lstcolor}{rgb}{0.95,0.95,0.95}
+\definecolor{codegray}{rgb}{0.3,0.3,0.3}
+\definecolor{commentgray}{rgb}{0.5,0.5,0.5}
+
 \acrodef{DSL}{domain specific language}
+\acrodef{IRB}{Interactive Ruby Shell}
 \acrodef{LOC}{lines of code}
+\acrodef{MRI}{Matz's Ruby Interpreter}
 \acrodef{REPL}{read-eval-print loop}
 
+\lstset{
+  backgroundcolor=\color{lstcolor},
+  framerule=0pt,
+  basicstyle=\ttfamily\bfseries\color{codegray}\footnotesize,
+  keywordstyle=\color{black},
+  commentstyle=\color{commentgray},
+  numberstyle=\scriptsize,
+  numbersep=10pt,
+  stepnumber=1,
+  numbers=none,
+  columns=fixed,
+  basewidth={.55em},
+  fontadjust=true,
+  showstringspaces=false}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%% will be inserted by the editor %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -141,7 +161,7 @@ Computer Society, JOSER, journal, \LaTeX, paper, template.
   \item generality
 \end{itemize}
 in a single architecture (see \fig{triangle}).
-\begin{figure}[!t]
+\begin{figure}[htbp]
    \begin{center}
      \resizebox{.5\columnwidth}{!}{\includegraphics{triangle}}\\
      \caption{The main requirements when designing a programming language or system \citep{wolczko2011}\label{fig:triangle}}
@@ -172,9 +192,20 @@ Ruby has support for \emph{meta-programming}. In particular
   \item \code{send} dynamically calls a method
 \end{itemize}
 
-\ac{REPL}
-\ac{REPL}
-\ac{REPL}
+\ac{MRI} (the reference implementation of Ruby) comes with tool called the \ac{IRB}. \ac{IRB} is a \ac{REPL} for the Ruby programming language. \fig{repl} shows an example of an \ac{IRB} session.
+
+\begin{figure}[htbp]
+  \begin{center}
+    \begin{minipage}[b]{.8\columnwidth}
+      \lstset{language=Ruby,frame=single,numbers=none}
+      \begin{lstlisting}
+
+x = 5
+      \end{lstlisting}
+    \end{minipage}
+  \end{center}
+  \caption{The role of inspect methods when using IRB\label{fig:repl}}
+\end{figure}
 
 % empirical evidence for productivity (LOC, structural complexity)
 % theoretical contribution: generic operations, more fundamental understanding of computer vision
