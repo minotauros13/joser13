@@ -50,7 +50,7 @@ pdf: joser13.pdf
 
 joser13.pdf: joser13.tex joser13.aux joser13.bbl joser13.tpt \
 	IEEEtran.bst joser13.cls IEEEabrv.bib \
-	triangle.pdf wedekind.jpg
+	triangle.pdf amavasai.jpg chliveros.jpg wedekind.jpg 
 	$(PDFLATEX) $<
 	$(THUMBPDF) --modes=pdftex $@
 	$(PDFFONTS) $@
