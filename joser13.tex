@@ -17,7 +17,7 @@
 \usepackage{calc}
 \usepackage{verbatim}
 \usepackage{units}
-\usepackage{listings} % source code listings
+\usepackage{minted}
 \usepackage{float} % separate pages for colour images
 \usepackage{color}
 % http://www.poeschko.com/2012/01/highlighting-changes-in-latex/
@@ -48,30 +48,12 @@
 \newcommand{\tbl}[1]{Table~\ref{tbl:#1}}
 \newcommand{\lst}[1]{Listing~\ref{lst:#1}}
 
-\definecolor{lstcolor}{rgb}{0.95,0.95,0.95}
-\definecolor{codegray}{rgb}{0.3,0.3,0.3}
-\definecolor{commentgray}{rgb}{0.5,0.5,0.5}
-
 \acrodef{DSL}{domain specific language}
 \acrodef{IRB}{Interactive Ruby Shell}
 \acrodef{LOC}{lines of code}
 \acrodef{MRI}{Matz's Ruby Interpreter}
 \acrodef{REPL}{read-eval-print loop}
 
-\lstset{
-  backgroundcolor=\color{lstcolor},
-  framerule=0pt,
-  basicstyle=\ttfamily\bfseries\color{codegray}\footnotesize,
-  keywordstyle=\color{black},
-  commentstyle=\color{commentgray},
-  numberstyle=\scriptsize,
-  numbersep=10pt,
-  stepnumber=1,
-  numbers=none,
-  columns=fixed,
-  basewidth={.55em},
-  fontadjust=true,
-  showstringspaces=false}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%% will be inserted by the editor %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -223,11 +205,21 @@ shows an example of an \ac{IRB} session.
 \begin{figure}[htbp]
   \begin{center}
     \begin{minipage}[b]{.8\columnwidth}
-      \lstset{language=Ruby,frame=single,numbers=none}
-      \begin{lstlisting}
-
-x = 5
-      \end{lstlisting}
+      \begin{minted}{ruby}
+class Test
+  def initialize(x)
+    @x = x
+  end
+  def inspect
+    "Test(#{@x})"
+  end
+end
+# nil
+Test.new 3
+# Test(3)
+Test.new(3).inspect
+# "Test(3)"
+      \end{minted}
     \end{minipage}
   \end{center}
   \caption{The role of inspect methods when using IRB\label{fig:repl}}
