@@ -224,13 +224,7 @@ Test.new(3).inspect
   \caption{The role of inspect methods when using IRB\label{lst:repl}}
 \end{listing}
 
-The \ac{IRB} session shown in \lst{repl} illustrates an important feature of Ruby: After evaluation the interpreter calls the \code{inspect} method of the result in order to display it. \emph{I.e.} the user can control the way an object is displayed by implementing the \code{inspect} method. \fig{object} shows an UML diagram of the class defined in \lst{repl}.
-\begin{figure}[htbp]
-  \begin{center}
-    \resizebox{.6\columnwidth}{!}{\includegraphics{object}}
-    \caption{Ruby object with \code{inspect} method\label{fig:object}}
-  \end{center}
-\end{figure}
+The \ac{IRB} session shown in \lst{repl} illustrates an important feature of Ruby: After evaluation the interpreter calls the \code{inspect} method of the result in order to display it. \emph{I.e.} the user can control the way an object is displayed by implementing the \code{inspect} method.
 
 \begin{listing}[htbp]
   \begin{minted}[fontsize=\footnotesize]{ruby}
