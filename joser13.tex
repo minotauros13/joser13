@@ -206,7 +206,7 @@ Ruby has support for \emph{meta-programming}. In particular
 \ac{IRB}. \ac{IRB} is a \ac{REPL} for the Ruby programming language. \lst{repl}
 shows an example of an \ac{IRB} session. Comment lines (preceded with \code{\#}) show the output of the interpreter.
 \begin{listing}[htbp]
-  \begin{minted}{ruby}
+  \begin{minted}[fontsize=\footnotesize]{ruby}
 class Test
   def initialize(x)
     @x = x
@@ -232,6 +232,25 @@ The \ac{IRB} session shown in \lst{repl} illustrates an important feature of Rub
   \end{center}
 \end{figure}
 
+\begin{listing}[htbp]
+  \begin{minted}[fontsize=\footnotesize]{ruby}
+def expect(x, &action)
+  while true
+    v = action.call
+    break if v >= x
+  end
+  v
+end
+# nil
+a = 1
+# 1
+expect(5) { a += 3 }
+# 7
+  \end{minted}
+  \caption{Implementing custom control structure using a closure\label{lst:closure}}
+\end{listing}
+% Closures $\Rightarrow$ custom control structures! (video input)
+
 % Ruby: coerce/numerical library, unit testing,
 
 % empirical evidence for productivity (LOC, structural complexity)
@@ -241,7 +260,6 @@ The \ac{IRB} session shown in \lst{repl} illustrates an important feature of Rub
 % (Const.new) MRI: single threaded (JRuby?, Rubinius?), meta-programming does
 % not cover control statements (while, if, ...)
 
-% Closures $\Rightarrow$ custom control structures! (video input)
 
 % No architecture: don't impose a static datatype for representing images etc
 
