@@ -5,7 +5,7 @@
 .SUFFIXES:
 .SUFFIXES: .pdf .tex .ps .aux .eps .pstex_t .bib .bbl .png .pnm .jpg \
 	.dia .ps.gz .fig .tpt .pov .ini .gnuplot .svg .iso .cc .o \
-	.data .erb .ini .txt .rb
+	.data .erb .ini .txt .rb .dot
 
 HORNETSEYE = $(HOME)/test/hornetseye
 ARTICLES = $(HOME)/Documents/work/nano/articles
@@ -37,6 +37,7 @@ PDFTK = pdftk
 INKSCAPE = inkscape
 LN_S = ln -s
 RUBY = ruby
+DOT = dot
 
 default: pdf
 
@@ -50,7 +51,8 @@ pdf: joser13.pdf
 
 joser13.pdf: joser13.tex joser13.aux joser13.bbl joser13.tpt \
 	IEEEtran.bst joser13.cls IEEEabrv.bib \
-	triangle.pdf amavasai.jpg chliveros.jpg wedekind.jpg 
+	triangle.pdf amavasai.jpg chliveros.jpg wedekind.jpg \
+	object.pdf
 	$(PDFLATEX) -shell-escape $<
 	$(THUMBPDF) --modes=pdftex $@
 	$(PDFFONTS) $@
@@ -110,6 +112,9 @@ clean:
 
 .fig.eps:
 	$(FIG2DEV) -L pstex $< $@
+
+.dot.pdf:
+	$(DOT) -T pdf -o $@ $<
 
 # Do not create pdf directly!
 # Set all text-flags in xfig to special! Use pstex_t!

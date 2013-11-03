@@ -37,7 +37,9 @@
   \put(0,0){
     \resizebox*{!}{\paperheight}{\rotatebox{57}{\hspace{1em}\textcolor{esored}{DRAFT}\hspace{1em}}}}}
 
-\usemintedstyle{trac}
+% \usemintedstyle{trac}
+\usemintedstyle{borland}
+% \usemintedstyle{bw}
 
 \definecolor{codegray}{rgb}{0.3,0.3,0.3}
 \newcommand{\code}[1]{``\texttt{\textbf{\textcolor{codegray}{\small{#1}}}}''}
@@ -201,13 +203,10 @@ Ruby has support for \emph{meta-programming}. In particular
 \end{itemize}
 
 \ac{MRI} (the reference implementation of Ruby) comes with tool called the
-\ac{IRB}. \ac{IRB} is a \ac{REPL} for the Ruby programming language. \fig{repl}
-shows an example of an \ac{IRB} session.
-
-\begin{figure}[htbp]
-  \begin{center}
-    \begin{minipage}[b]{.8\columnwidth}
-      \begin{minted}{ruby}
+\ac{IRB}. \ac{IRB} is a \ac{REPL} for the Ruby programming language. \lst{repl}
+shows an example of an \ac{IRB} session. Comment lines (preceded with \code{\#}) show the output of the interpreter.
+\begin{listing}[htbp]
+  \begin{minted}{ruby}
 class Test
   def initialize(x)
     @x = x
@@ -221,17 +220,24 @@ Test.new 3
 # Test(3)
 Test.new(3).inspect
 # "Test(3)"
-      \end{minted}
-    \end{minipage}
+  \end{minted}
+  \caption{The role of inspect methods when using IRB\label{lst:repl}}
+\end{listing}
+
+The \ac{IRB} session shown in \lst{repl} illustrates an important feature of Ruby: After evaluation the interpreter calls the \code{inspect} method of the result in order to display it. \emph{I.e.} the user can control the way an object is displayed by implementing the \code{inspect} method. \fig{object} shows an UML diagram of the class defined in \lst{repl}.
+\begin{figure}[htbp]
+  \begin{center}
+    \resizebox{.6\columnwidth}{!}{\includegraphics{object}}
+    \caption{Ruby object with \code{inspect} method\label{fig:object}}
   \end{center}
-  \caption{The role of inspect methods when using IRB\label{fig:repl}}
 \end{figure}
+
+% Ruby: coerce/numerical library, unit testing,
 
 % empirical evidence for productivity (LOC, structural complexity)
 % theoretical contribution: generic operations, more fundamental understanding
 % of computer vision
 
-% Ruby: Interactive Ruby, inspect, coerce, numerical library, unit testing,
 % (Const.new) MRI: single threaded (JRuby?, Rubinius?), meta-programming does
 % not cover control statements (while, if, ...)
 
