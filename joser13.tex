@@ -254,8 +254,24 @@ expect(5) { a += 3 }
 % (Const.new) MRI: single threaded (JRuby?, Rubinius?), meta-programming does
 % not cover control statements (while, if, ...)
 
+% Decision diagram: Lush, C++ class, C struct (OpenCV)
+% * simple method names (without types)
+% * only instantiate required/valid methods (unlike C++ templates)
+% * operations supported for arbitrary number of dimensions
+% * performance
+% * support for arbitrary type-combinations (in NArray/C++ not impossible but
+% it is easier to
+% work around those limitations)
 
-% No architecture: don't impose a static datatype for representing images etc
+% * make type diagrams INT(SIGNED, 32), value: Ruby object of matching type
+% * pointers (value: Malloc)
+% * variables, lambda, lookup, element-wise, ... (optimised building blocks)
+% <-> Lambda
+% calculus (minimal)
+
+% Shared definitions for datatypes (images) are in Ruby and *not* in C/C++
+% -> no static datatype imposed on the software, dynamic Ruby datastructures
+% can be used in C/C++ using Ruby's native interface
 
 % Integration
 
