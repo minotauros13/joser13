@@ -74,9 +74,10 @@
 \headoddname{J. WEDEKIND et al. / Computer Vision and Device Control using the Ruby Programming Language}
 
 % correct bad hyphenation here
-\hyphenation{op-tical
-  net-works
-  semi-conduc-tor}
+\hyphenation{
+  in-vol-ving
+  ma-na-ge-ment
+}
 
 \begin{document}
 % paper title
@@ -139,8 +140,6 @@ $^3$ 96 Brooksby Road, Reading R31 6LY, United Kingdom}
 
 % make the title area
 \maketitle
-
-% MISLA
 
 \section{Introduction}
 % The very first letter is a 2 line initial drop letter followed
@@ -207,19 +206,24 @@ Ruby has support for \textbf{meta-programming}. In particular
 shows an example of an \ac{IRB} session. Comment lines (preceded with \code{\#}) show the output of the interpreter.
 \begin{listing}[htbp]
   \begin{minted}[fontsize=\footnotesize]{ruby}
-class Test
-  def initialize(x)
-    @x = x
+class Point
+  attr_reader :x, :y
+  def initialize x, y
+    @x, @y = x, y
   end
   def inspect
-    "Test(#{@x})"
+    "Point(#{@x}, #{@y})"
   end
 end
 # nil
-Test.new 3
-# Test(3)
-Test.new(3).inspect
-# "Test(3)"
+def Point x, y
+  Point.new x, y
+end
+# nil
+Point 1, 2
+# Point(1, 2)
+Point(1, 2).inspect
+# "Point(1, 2)"
   \end{minted}
   \caption{The role of inspect methods when using IRB\label{lst:repl}}
 \end{listing}
@@ -231,11 +235,11 @@ object is displayed by implementing the \code{inspect} method.
 
 \lst{closure} demonstrates how closures facilitate the implementation of custom
 control structures. The method \code{repeat} applies the closure \code{action}
-\code{10} times to the argument \code{1.0}. Note that the closure has access to
+$10$ times to the argument $1.0$. Note that the closure has access to
 the variable \code{seed} while the method \code{repeat} does not.
 \begin{listing}[htbp]
   \begin{minted}[fontsize=\footnotesize]{ruby}
-def repeat(n, x, &action)
+def repeat n, x, &action
   if n.zero?
     x
   else
@@ -243,14 +247,62 @@ def repeat(n, x, &action)
   end
 end
 # nil
-# seed = 2
+seed = 2
 # 2
 repeat(10, 1.0) { |x| 0.5 * (x + seed / x) }
 # 1.414213562373095
   \end{minted}
-  \caption{Implementing custom control structure using a closure\label{lst:closure}}
+  \caption{Implementing custom control structure using a
+  closure\label{lst:closure}}
 \end{listing}
-% Ruby: coerce/numerical library, unit testing,
+
+As mentioned earlier, Ruby implements \emph{open classes}. \emph{I.e.} after
+having defined the class \code{Point} as shown in \lst{repl}, one can still add
+methods (\emph{e.g.} scalar multiplication) to the class (see \lst{openclass}).
+\begin{listing}[htbp]
+  \begin{minted}[fontsize=\footnotesize]{ruby}
+class Point
+  def - c
+    Point @x - c, @y - c
+  end
+end
+# nil
+Point(3, 4) - 2
+# Point(1, 2)
+  \end{minted}
+  \caption{Ruby implements open classes\label{lst:openclass}}
+\end{listing}
+
+The Ruby standard library supports various numerical datatypes (\emph{e.g.}
+complex numbers, rational numbers). It also implements \emph{coercions} to
+facilitate binary operations involving custom datatypes. \lst{coerce} shows how
+to implement \code{Point\#coerce} in order to implement binary operations where
+the custom data type \code{Point} is the second argument.
+\begin{listing}[htbp]
+  \begin{minted}[fontsize=\footnotesize]{ruby}
+class Point
+  class Scalar
+    def initialize c
+      @c = c
+    end
+    def - point
+      Point @c - point.x, @c - point.y
+    end
+  end
+  def coerce c
+    [Scalar.new(c), self]
+  end
+end
+# nil
+6 - Point(5, 4)
+# Point(1, 2)
+  \end{minted}
+  \caption{Coercions for custom numeric datatypes\label{lst:coerce}}
+\end{listing}
+
+% down to the metal, instead of bindings
+
+% unit testing,
 
 % empirical evidence for productivity (LOC, structural complexity)
 % theoretical contribution: generic operations, more fundamental understanding
@@ -259,6 +311,7 @@ repeat(10, 1.0) { |x| 0.5 * (x + seed / x) }
 % (Const.new) MRI: single threaded (JRuby?, Rubinius?), meta-programming does
 % not cover control statements (while, if, ...)
 
+% Why not just ...?
 % Decision diagram: Lush, C++ class, C struct (OpenCV)
 % * simple method names (without types)
 % * only instantiate required/valid methods (unlike C++ templates)
@@ -268,7 +321,7 @@ repeat(10, 1.0) { |x| 0.5 * (x + seed / x) }
 % it is easier to
 % work around those limitations)
 
-% * make type diagrams INT(SIGNED, 32), value: Ruby object of matching type
+% * value: Ruby object of matching type
 % * pointers (value: Malloc)
 % * variables, lambda, lookup, element-wise, ... (optimised building blocks)
 % <-> Lambda
@@ -278,7 +331,7 @@ repeat(10, 1.0) { |x| 0.5 * (x + seed / x) }
 % -> no static datatype imposed on the software, dynamic Ruby datastructures
 % can be used in C/C++ using Ruby's native interface
 
-% Integration
+% Integration (e.g. RMagick) using open classes
 
 % JIT compilation (using GCC): fetch, construct, store, coerce, coercion,
 % descriptor, dup, compilable?, strip, get, assign, write, storage\_size,
@@ -596,7 +649,7 @@ the Best Paper Award of the XX International Conference in 2000 and
 \begin{IEEEbiography}[{chliveros}]{Georgios Chliveros}
 received his PhD in Pattern Recognition from Sheffield Hallam University (SHU)
 in 2005. His undergraduate studies were on instrumentation systems and
-his postgraduate studies on industrial statistics. 
+his postgraduate studies on industrial statistics.
 He was a researcher in robotics at the Materials and Engineering Research Institute, SHU
 from 2004 to 2011. Currently he is a research engineer in machine vision and robotics at
 the Foundation for Research and Technology Hellas (ICS-FORTH).
