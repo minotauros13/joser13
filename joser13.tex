@@ -194,7 +194,7 @@ for memory management. Important features of the programming language are
   \item \emph{open classes}
 \end{itemize}
 
-Ruby has support for \emph{meta-programming}. In particular
+Ruby has support for \textbf{meta-programming}. In particular
 \begin{itemize}
   \item \code{methods} returns an object's list of available methods
   \item \code{define\_method} defines a method at runtime
@@ -224,27 +224,32 @@ Test.new(3).inspect
   \caption{The role of inspect methods when using IRB\label{lst:repl}}
 \end{listing}
 
-The \ac{IRB} session shown in \lst{repl} illustrates an important feature of Ruby: After evaluation the interpreter calls the \code{inspect} method of the result in order to display it. \emph{I.e.} the user can control the way an object is displayed by implementing the \code{inspect} method.
+The \ac{IRB} session shown in \lst{repl} illustrates an important feature of
+Ruby: After evaluation the interpreter calls the \code{inspect} method of the
+result in order to display it. \emph{I.e.} the user can control the way an
+object is displayed by implementing the \code{inspect} method.
 
+\lst{closure} demonstrates how closures facilitate the implementation of custom
+control structures. The method \code{repeat} applies the closure \code{action}
+\code{10} times to the argument \code{1.0}. Note that the closure has access to
+the variable \code{seed} while the method \code{repeat} does not.
 \begin{listing}[htbp]
   \begin{minted}[fontsize=\footnotesize]{ruby}
-def expect(x, &action)
-  while true
-    v = action.call
-    break if v >= x
+def repeat(n, x, &action)
+  if n.zero?
+    x
+  else
+    repeat n - 1, action.call(x), &action
   end
-  v
 end
 # nil
-a = 1
-# 1
-expect(5) { a += 3 }
-# 7
+# seed = 2
+# 2
+repeat(10, 1.0) { |x| 0.5 * (x + seed / x) }
+# 1.414213562373095
   \end{minted}
   \caption{Implementing custom control structure using a closure\label{lst:closure}}
 \end{listing}
-% Closures $\Rightarrow$ custom control structures! (video input)
-
 % Ruby: coerce/numerical library, unit testing,
 
 % empirical evidence for productivity (LOC, structural complexity)
@@ -361,6 +366,21 @@ expect(5) { a += 3 }
 %    algorithms. Papers should report on what was learned in doing the work,
 %    rather than merely on what was done.
 \section{$\ldots$}
+\begin{figure}[htbp]
+   \begin{center}
+     \resizebox{\columnwidth}{!}{\includegraphics{types}}\\
+     \caption{Element types\label{fig:types}}
+   \end{center}
+\end{figure}
+
+\begin{figure}[htbp]
+   \begin{center}
+     \resizebox{\columnwidth}{!}{\includegraphics{image}}\\
+     \caption{Example of array type\label{fig:image}}
+   \end{center}
+\end{figure}
+% Closures for video input
+
 \begin{itemize}
   \item Software architecture based on memory objects (Malloc) allows
     integration (no C++ "static" types).

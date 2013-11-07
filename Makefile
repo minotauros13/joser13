@@ -51,7 +51,8 @@ pdf: joser13.pdf
 
 joser13.pdf: joser13.tex joser13.aux joser13.bbl joser13.tpt \
 	IEEEtran.bst joser13.cls IEEEabrv.bib \
-	triangle.pdf amavasai.jpg chliveros.jpg wedekind.jpg
+	triangle.pdf amavasai.jpg chliveros.jpg wedekind.jpg \
+	types.pdf image.pdf
 	$(PDFLATEX) -shell-escape $<
 	$(THUMBPDF) --modes=pdftex $@
 	$(PDFFONTS) $@
@@ -114,6 +115,9 @@ clean:
 
 .dot.png:
 	$(DOT) -T png -o $@ $<
+
+.dot.pdf:
+	$(DOT) -T pdf -o $@ $<
 
 # Do not create pdf directly!
 # Set all text-flags in xfig to special! Use pstex_t!
