@@ -117,8 +117,9 @@ $^3$ 96 Brooksby Road, Reading R31 6LY, United Kingdom}
 % The paper headers
 \markboth
 
+% paper 6-10 pages, less than 5 MByte
 \IEEEcompsoctitleabstractindextext{%
-% No more than 500 words
+% No more than 500 words abstract
 % define all nonstandard symbols and acronyms used
 \begin{abstract}
   $\ldots$
@@ -300,124 +301,6 @@ end
   \caption{Coercions for custom numeric datatypes\label{lst:coerce}}
 \end{listing}
 
-% down to the metal, instead of bindings
-
-% unit testing,
-
-% empirical evidence for productivity (LOC, structural complexity)
-% theoretical contribution: generic operations, more fundamental understanding
-% of computer vision
-
-% (Const.new) MRI: single threaded (JRuby?, Rubinius?), meta-programming does
-% not cover control statements (while, if, ...)
-
-% Why not just ...?
-% Decision diagram: Lush, C++ class, C struct (OpenCV)
-% * simple method names (without types)
-% * only instantiate required/valid methods (unlike C++ templates)
-% * operations supported for arbitrary number of dimensions
-% * performance
-% * support for arbitrary type-combinations (in NArray/C++ not impossible but
-% it is easier to
-% work around those limitations)
-
-% * value: Ruby object of matching type
-% * pointers (value: Malloc)
-% * variables, lambda, lookup, element-wise, ... (optimised building blocks)
-% <-> Lambda
-% calculus (minimal)
-
-% Shared definitions for datatypes (images) are in Ruby and *not* in C/C++
-% -> no static datatype imposed on the software, dynamic Ruby datastructures
-% can be used in C/C++ using Ruby's native interface
-
-% Integration (e.g. RMagick) using open classes
-
-% JIT compilation (using GCC): fetch, construct, store, coerce, coercion,
-% descriptor, dup, compilable?, strip, get, assign, write, storage\_size,
-% memory\_type, default, inspect
-
-% fast development cycle
-
-% maximally generic (binary operations (no subset of integer types),
-% histograms, tensor operations, luts/warps, map (unary operation), inject,
-% mask/unmask (larrabee), integral, convolution)
-
-% Possible topics for papers submitted to the journal include but
-% are not limited to:
-% \begin{itemize}
-%     \item Analysis of issues and challenges in the development of robot
-%     software systems, that make the robotic domain similar/different to other
-%     application domains (e.g. automotive, factory automation)
-%     \item Identification of recurrent concepts, aspects, and requirements in
-%     robot software systems, that may lead to the definition of standard /
-%     common / unified specifications, design models, interfaces, protocols,
-%     and software libraries
-%     \item Documentation of measures and procedures to evaluate software
-%     quality factors
-%     \item Description of conceptual tools as well as software environments
-%     that simplify the design, implementation, and reuse of robot software
-%     systems.
-%     \item Exploitation of software engineering conceptual tools (e.g. formal
-%     specification and verification methods) to cope with specific robotic
-%     requirements (e.g. fault tolerance, robustness, autonomy, real-time
-%     guarantee)
-%     \item Experience reports and case studies of successful development of
-%     software systems for real robotic applications.
-% \end{itemize}
-%
-% These instructions give you guidelines for preparing papers for
-% JOSER. Download the LaTeX template files from the website
-% \url{http://www.joser.org/public/download/josertex.zip} so you can use the
-% templates to prepare your manuscript.
-
-% \section{Editorial Policies}
-% This journal provides immediate open access to its content on the
-% principle that making research freely available to the public
-% supports a greater global exchange of knowledge.
-% Papers will be available on the JOSER Web portal as soon as they have been
-% approved by the reviewers.
-%
-% \subsection{Type of papers}
-% Submitted articles may be of three basic types:
-%
-% {\bf Regular papers}: Detailed discussion involving new
-% research, applications or developments. There is no length limit
-% on regular papers. The nominal length is 10 single-spaced, double
-% column pages including figures and bibliography. However, it is
-% recommended that papers not exceed 15 single-spaced, double column
-% pages. Papers that exceed this recommended maximum length will
-% still be considered, but might not be guaranteed editorial review
-% or publication in a timely fashion.
-%
-% {\bf Short papers}: Brief presentations of new technical concepts
-% and developments. Short papers should not exceed 6 single-spaced
-% double column pages including figures and bibliography.
-%
-% {\bf Comments}: Comments are brief contributions that comment on
-% previously published papers. These may include reports on
-%
-% \begin{itemize}
-%     \item exploitation and validation of research results
-%     \item interpretation of experimental data
-%     \item opinions about open issues
-% \end{itemize}
-% Comments should equal 4 single-spaced double column pages (including
-% reasonably sized figures and references).
-
-
-%\subsection{Review criteria}
-%Papers are reviewed and evaluated according to the following criteria.
-%\begin{itemize}
-%    \item Relevance. Descriptions of pure sensor processing, planning or
-%    control get a lower score than documentations of (1) software
-%    architectures that help to integrate these core aspects of robotics, (2)
-%    software requirements that have been taken into account (portability,
-%    reusability, maintainability, interoperability, etc.), (3) metrics and
-%    methods that allow to assess software quality factors of robotic systems,
-%    or (4) computational issues related to the implementation of robotics
-%    algorithms. Papers should report on what was learned in doing the work,
-%    rather than merely on what was done.
 \section{$\ldots$}
 \begin{figure}[htbp]
    \begin{center}
@@ -432,9 +315,41 @@ end
      \caption{Example of array type\label{fig:image}}
    \end{center}
 \end{figure}
-% Closures for video input
 
 \begin{itemize}
+  \item down to the metal, instead of bindings
+  \item unit testing,
+  \item empirical evidence for productivity (LOC, structural complexity),
+    reuse, maintainability
+  \item theoretical contribution: generic operations, more fundamental
+    understanding of computer vision
+  \item (Const.new) MRI: single threaded (JRuby?, Rubinius?), meta-programming
+    does not cover control statements (while, if, ...)
+  \item Why not just ...?  Decision diagram: Lush, C++ class, C struct (OpenCV)
+    \begin{itemize}
+      \item simple method names (without types)
+      \item only instantiate required/valid methods (unlike C++ templates)
+      \item operations supported for arbitrary number of dimensions
+      \item performance
+      \item support for arbitrary type-combinations (in NArray/C++ not
+        impossible but it is easier to work around those limitations)
+    \end{itemize}
+  \item value: Ruby object of matching type
+  \item pointers (value: Malloc)
+  \item variables, lambda, lookup, element-wise, ... (optimised building
+    blocks) $\leftrightarrow$ Lambda calculus (minimal)
+  \item Shared definitions for datatypes (images) are in Ruby and *not* in
+    C/C++ $\rightarrow$ no static datatype imposed on the software, dynamic
+    Ruby datastructures can be used in C/C++ using Ruby's native interface
+  \item Integration (e.g. RMagick) using open classes,
+    reuse/adaptation/reengineering of existing software artifacts.
+  \item JIT compilation (using GCC): fetch, construct, store, coerce, coercion,
+    descriptor, dup, compilable?, strip, get, assign, write, storage\_size,
+    memory\_type, default, inspect
+  \item fast development cycle
+  \item maximally generic (binary operations (no subset of integer types),
+    histograms, tensor operations, luts/warps, map (unary operation), inject,
+    mask/unmask (larrabee), integral, convolution)
   \item Software architecture based on memory objects (Malloc) allows
     integration (no C++ "static" types).
   \item Requirements: generic operators on n-dimensional arrays, high
@@ -442,16 +357,8 @@ end
     generic operators instead of monolithic implementations
   \item Ruby allows for functional testing
   \item Using closures during camera initialisation and for displaying videos
-\end{itemize}
-%    \item Significance. Descriptions of ad-hoc software library, framework, or
-%    middleware for specific robotic systems get a lower score that
-%    documentation of reuse/adaptation/reengineering of existing software
-%    artifacts. When appropriate, authors are encouraged to demonstrate the
-%    utility of their work on significant problems; any experiments reported
-%    should be     reproducible. Contributions to relevant standards,
-%    benchmarks, software patterns as well as their adoption in novel
-%    application contexts are positively evaluated.
-\begin{itemize}
+  \item When appropriate, authors are encouraged to demonstrate the utility of
+    their work on significant problems
   \item Integration of existing I/O libraries: ALSA, DC1394, FFMpeg, Kinect,
     OpenEXR, Qt4, RMagick, V4L2, Xorg
   \item Integration with other libraries: FFTW3, libswscale, linalg, narray,
@@ -470,85 +377,12 @@ end
 % the conclusions have already been stated in the introduction.
 Racket, Clojure, Factor, STEPS project
 
-%    \item Originality. The work cannot have been published previously or be
-%    pending publication in another journal, and submissions cannot be under
-%    review or be sent for review in any other journal. We will consider
-%    research that has been published, or is under consideration for
-%    publication at workshops or conferences. In these cases, we expect the
-%    JMLR submission to go into greater depth and extend the published results
-%    in a substantive way. Authors must notify JOSER about previous or pending
-%    conference publication at the time of submission.
-%    \item Technical quality. Use of standard modeling languages (e.g. UML,
-%    SysML, Marte, AADL) is positively evaluated as well as motivation why
-%    existing standards are not sufficient for the authors purpose. All
-%    claims should be clearly articulated and supported either by empirical
-%    experiments or theoretical analyses.
-%    \item Presentation. Papers must be concise and complete; manuscripts
-%    should be carefully proofread and polished. Submissions that do not meet
-%    these criteria may be returned unreviewed.
-%\end{itemize}
-
-%\section{Manuscript submission}
-%Authors need to register with the journal prior to submitting, or if already
-%registered can
-%simply log in and begin the 5 step process.
-%All submissions are acknowledged.
-
-% An example of a floating table. Note that the
-% \caption command should come BEFORE the table. Table text will default to
-% \footnotesize.
-% The \label must come after \caption.
-%
-%\begin{table}[!t]
-%\renewcommand{\arraystretch}{1.3}
-%\caption{An Example of a Table}
-%\label{table_example}
-%\centering
-%\begin{tabular}{|c||c|}
-%\hline
-%One & Two\\
-%\hline
-%Three & Four\\
-%\hline
-%\end{tabular}
-%\end{table}
-
 % \subsection{Initial Submission}
-% Articles must be submitted in PDF. Submissions should be typeset
-% in 11 point font or larger, and should include all author contact
-% information on the first page.
-%
-% Although not required for submission, we encourage authors to use
-% the JOSER LaTeX style package (described hereafter).
-%
 % Articles may be accompanied by online supplemental material.
 % (Note: if an online appendix contains source code, we will require
 % you to sign a release form prior to publication freeing us from
 % liability.)
 %
-% To submit a paper, please
-% \begin{enumerate}
-%    \item Prepare it in PDF.
-%    \item Ensure that the file to be uploaded is less than 5Mb in size.
-%    \item Ensure that the title page contains
-%    \begin{itemize}
-%           \item complete name, postal and e-mail address of the corresponding
-%           author;
-%           \item an abstract that does not exceed 500 words
-%           \item a list of minimum two keywords (five recommended)
-%    \end{itemize}
-%    \item Register, log in, and begin the 5 step process.
-% \end{enumerate}
-%
-% \subsection{Camera-ready copies of accepted papers}
-% To ensure that all articles published in the journal have a
-% uniform appearance, all camera-ready copies of accepted papers are
-% required to be typeset in LaTeX with the JOSER LaTeX style
-% package.
-%
-% Camera-ready copies of accepted papers which do not adhere to JOSER author
-% guidelines WILL NOT be published. Authors must submit camera-ready papers as
-% zip files that include:
 % \begin{enumerate}
 %     \item a single source file author\_yyyymmdd.tex; do not include external
 %     .tex files; use the submission date
@@ -569,56 +403,6 @@ Racket, Clojure, Factor, STEPS project
 % biography and the photographs of every author (above 600 dpi),
 % tables and figures (above 600 dpi). Supplemental material should
 % be briefly described in section "Appendixes".
-%
-% \subsection{Abbreviations and acronyms}
-% Define abbreviations and acronyms the first time they are used in
-% the text, even after they have already been defined in the abstract
-% or keywords. Abbreviations such as IEEE, SI, etc., do not have
-% to be defined. Abbreviations that incorporate periods should not
-% have spaces: write ``C.N.R.S.,'' not ``C.\ N.\ R.\ S.''
-%
-%
-% \subsection{Figures and tables}
-% Please verify that the figures and tables you mention in the text actually
-% exist.
-%
-% Every figure must have a caption that is complete and intelligible
-% in itself without reference to the text.
-%
-% The preferred format is jpg for figures
-% with a minimum resolution of 600 dpi (dots per inch).
-% The description style of the figures is specified as ``Time New
-% Roman 8pt-12pt''. Figures can be in color or grayscale.
-%
-% \begin{figure}[!t]
-% \centering
-% \includegraphics[width=2.5in]{figure}
-% \caption{It is good practice to explain the significance
-% of the figure in the caption}
-% \label{fig:afigure}
-% \end{figure}
-%
-%
-% \section*{Supplemental material}
-% JOSER accepts supplemental materials for review and publication with regular
-% paper submissions.
-%
-% Types of supplemental material include:
-% \begin{itemize}
-%     \item proofs
-%     \item code
-%     \item experimental data
-%     \item Graphics should be in JPEG, GIF, PNG, or TIFF format.
-%     \item Movies/Animations: .MOV, .AVI, .QT. MPEG files acceptable,
-%     QuickTime 3 format preferred, under 4 minutes in length, 320x240 pixels.
-%     File size must be minimized and download time must be considered. We
-%     recommend files not exceed 30 MB. Files larger than this may be returned
-%     for modification to make them smaller.
-% \end{itemize}
-%
-% If you intend to submit supplemental material, please describe it
-% shortly in this section.
-%
 %
 \section*{Acknowledgments}
 The authors would like to thank...
