@@ -2,6 +2,7 @@ digraph int {
   margin = 0;
   nodesep = 0.4;
   rankdir = LR;
+  node [style = filled];
   S1 [label="Sequence"];
   S2 [label="Sequence"];
   S1 -> S2;
