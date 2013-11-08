@@ -5,7 +5,7 @@
 .SUFFIXES:
 .SUFFIXES: .pdf .tex .ps .aux .eps .pstex_t .bib .bbl .png .pnm .jpg \
 	.dia .ps.gz .fig .tpt .pov .ini .gnuplot .svg .iso .cc .o \
-	.data .erb .ini .txt .rb
+	.data .erb .ini .txt .rb .dot
 
 HORNETSEYE = $(HOME)/test/hornetseye
 ARTICLES = $(HOME)/Documents/work/nano/articles
@@ -37,37 +37,41 @@ PDFTK = pdftk
 INKSCAPE = inkscape
 LN_S = ln -s
 RUBY = ruby
+DOT = dot
+ZIP = zip
+
+TAG = wedekind_20131110
+FIGURES = $(TAG)_f01.pdf $(TAG)_f02.pdf $(TAG)_f03.pdf \
+	$(TAG)_f04.jpg $(TAG)_f05.jpg $(TAG)_f06.jpg
 
 default: pdf
+	
+pdf: $(TAG).pdf
 
-help:
-	echo 'make pdf' creates colour electronic version 'elcvia11.pdf'
-#	echo 'make foils' creates colour electronic foils 'foils.pdf'
+zip: $(TAG).zip
 
-pdf: joser13.pdf
+$(TAG).zip: $(TAG).tex $(TAG).pdf $(TAG).bib $(FIGURES)
+	$(ZIP) -9 $@ $(TAG).tex $(TAG).pdf $(TAG).bib $(FIGURES)
 
-# foils: foils.pdf
-
-joser13.pdf: joser13.tex joser13.aux joser13.bbl joser13.tpt \
-	IEEEtran.bst joser13.cls IEEEabrv.bib \
-	triangle.pdf wedekind.jpg
-	$(PDFLATEX) $<
+$(TAG).pdf: $(TAG).tex $(TAG).aux $(TAG).bbl $(TAG).tpt \
+	IEEEtran.bst joser1.cls IEEEabrv.bib $(FIGURES)
+	$(PDFLATEX) -shell-escape $<
 	$(THUMBPDF) --modes=pdftex $@
 	$(PDFFONTS) $@
 	ls -la $@
 	echo
-	( sleep 1 && touch joser13.aux && touch joser13.tpt ) &
+	( sleep 1 && touch $(TAG).aux && touch $(TAG).tpt ) &
 
-# elcvia11.128.pdf: elcvia11.pdf
-# 	$(PDFTK) $< output $@ encrypt_128bit compress owner_pw lockHornMath34 allow AllFeatures
+$(TAG).bbl: $(TAG).bib $(TAG).aux
+	$(BIBTEX) $(TAG)
 
-joser13.bbl: joser13.bib joser13.aux noPercent.awk
-	$(BIBTEX) joser13
-	./noPercent.awk $@ > joser13.tmp
-	mv joser13.tmp $@
+# $(TAG).bbl: $(TAG).bib $(TAG).aux noPercent.awk
+# 	$(BIBTEX) $(TAG)
+# 	./noPercent.awk $@ > $(TAG).tmp
+# 	mv $(TAG).tmp $@
 
 dist:
-	$(GIT) archive --format=tar --prefix=joser13/ HEAD | $(BZIP2) > joser13.tar.bz2
+	$(GIT) archive --format=tar --prefix=$(TAG)/ HEAD | $(BZIP2) > $(TAG).tar.bz2
 
 clean:
 	rm -Rf *.pdf *.eps *.pstex_t *.ps *.ps.gz *.bbl *.log *.aux *.tmp \
@@ -81,7 +85,7 @@ clean:
 %.aux:
 	echo '\\citation{undefined}' > $@
 	echo '\\bibstyle{IEEEtran}' >> $@
-	echo '\\bibdata{IEEEabrv,joser13}' >> $@
+	echo '\\bibdata{IEEEabrv,$(TAG)}' >> $@
 
 .png.pnm:
 	$(CONVERT) $< -colorspace gray $@
@@ -110,6 +114,12 @@ clean:
 
 .fig.eps:
 	$(FIG2DEV) -L pstex $< $@
+
+.dot.png:
+	$(DOT) -T png -o $@ $<
+
+.dot.pdf:
+	$(DOT) -T pdf -o $@ $<
 
 # Do not create pdf directly!
 # Set all text-flags in xfig to special! Use pstex_t!

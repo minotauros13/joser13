@@ -1,0 +1,615 @@
+\documentclass[10pt,journal,compsoc]{joser1}
+\usepackage[pdftex]{graphicx}
+\usepackage{epsfig}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage[square,numbers]{natbib}
+\usepackage{acronym}
+\usepackage{dsfont}
+\usepackage{pifont} % http://www.imsc.res.in/Computer/symbols-letter.pdf
+\usepackage[pdftex]{thumbpdf}
+\usepackage{multirow} % Prevent page breaks occurring within multi-line eqs.
+\usepackage{rotating} % text rotation
+\usepackage{booktabs} % rules in tables
+% \usepackage{array} % alignment of cells in tables
+\usepackage{calc}
+\usepackage{verbatim}
+\usepackage{units}
+\usepackage{minted}
+\usepackage{float} % separate pages for colour images
+\usepackage{color}
+% http://www.poeschko.com/2012/01/highlighting-changes-in-latex/
+\usepackage{xcolor}
+\usepackage[normalem]{ulem}
+% \usepackage{trfsigns} % trfsigns.pdf
+\usepackage{txfonts} % txfontsdoc.pdf
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xmpincl}
+\usepackage{eso-pic} % DRAFT
+\usepackage{attachfile}
+
+\definecolor{esored}{rgb}{1.00,0.95,0.95}
+% http://de.narkive.com/2003/11/26/744404-wasserzeichen-mit-pdflatex.html
+\AddToShipoutPicture{
+  \put(0,0){
+    \resizebox*{!}{\paperheight}{\rotatebox{57}{\hspace{1em}\textcolor{esored}{DRAFT}\hspace{1em}}}}}
+
+% \usemintedstyle{trac}
+\usemintedstyle{borland}
+% \usemintedstyle{bw}
+
+\definecolor{codegray}{rgb}{0.3,0.3,0.3}
+\newcommand{\code}[1]{``\texttt{\textbf{\textcolor{codegray}{\small{#1}}}}''}
+
+\newcommand{\sct}[1]{Section~\ref{cha:#1}}
+\newcommand{\equ}[1]{Equation~\ref{equ:#1}}
+\newcommand{\anx}[1]{Appendix~\ref{cha:#1}}
+\newcommand{\fig}[1]{Figure~\ref{fig:#1}}
+% \newcommand{\plt}[1]{Figure~\ref{fig:#1}}
+\newcommand{\tbl}[1]{Table~\ref{tbl:#1}}
+\newcommand{\lst}[1]{Listing~\ref{lst:#1}}
+
+\acrodef{DSL}{domain specific language}
+\acrodef{IRB}{Interactive Ruby Shell}
+\acrodef{LOC}{lines of code}
+\acrodef{MRI}{Matz's Ruby Interpreter}
+\acrodef{REPL}{read-eval-print loop}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%% will be inserted by the editor %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\journalnumber{1}                       %will be inserted by the editor
+\journalvolume{1}                       %will be inserted by the editor
+\journalmonth{September}                %will be inserted by the editor
+\journalyear{2009}                      %will be inserted by the editor
+\articlefirstpage{123}                  %will be inserted by the editor
+\articlelastpage{126}                   %will be inserted by the editor
+\setcounter{page}{123}                  %will be inserted by the editor
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\copyrightauthor{J. Wedekind, G. Chliveros, B. P. Amavasai}
+\headoddname{J. WEDEKIND et al. / Computer Vision and Device Control using the Ruby Programming Language}
+
+% correct bad hyphenation here
+\hyphenation{
+  in-vol-ving
+  ma-na-ge-ment
+}
+
+\begin{document}
+% paper title
+\title{Computer Vision and Device Control\\\vskip 0.3\baselineskip using the Ruby Programming Language}
+
+\author{
+Jan Wedekind$^{1}$
+\qquad
+Georgios Chliveros$^{2}$
+\qquad
+Balasundram P. Amavasai$^{3}$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%% will be inserted by the editor %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thanks{{\bf Regular paper} -- Manuscript received April 19, 2009;
+revised July 11, 2009.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\IEEEcompsocitemizethanks{\IEEEcompsocthanksitem This work was partially funded
+  by the EPSRC Nanorobotics grant and a student bursary by the Materials and
+  Engineering Research Institute at Sheffield Hallam University.\protect\\
+
+  \IEEEcompsocthanksitem Authors retain copyright to their papers
+  and grant JOSER unlimited rights to publish the paper electronically and in
+  hard copy. Use of the article is permitted as long as the author(s) and the
+  journal are properly acknowledged.}
+
+} % end author
+
+\address{
+$^1$ 7 William Road, Sutton SM1 4QT, United Kingdom\\
+$^2$ Institute of Computer Science, Foundation for Reasearch and
+Technology - Hellas, Heraklion, Crete, Greece\\
+$^3$ 96 Brooksby Road, Reading R31 6LY, United Kingdom}
+
+% The paper headers
+\markboth
+
+% paper 6-10 pages, less than 5 MByte
+\IEEEcompsoctitleabstractindextext{%
+% No more than 500 words abstract
+% define all nonstandard symbols and acronyms used
+\begin{abstract}
+  $\ldots$
+\end{abstract}
+
+\acresetall % repeat definitions even if introduced in abstract already
+
+% 2-5 keywords from http://www.old.ieee-ras.org/uploads/tro/T-RO_Keywords.pdf
+% or http://www.computer.org/portal/web/publications/acmtaxonomy
+\begin{IEEEkeywords}
+  Computer Vision,
+  Image processing software,
+  Input/output,
+  Interactive systems,
+  Reusable libraries,
+  Very high-level languages.
+\end{IEEEkeywords}}
+
+
+% make the title area
+\maketitle
+
+\section{Introduction}
+% The very first letter is a 2 line initial drop letter followed
+% by the rest of the first word in caps.
+\IEEEPARstart{M}{achine} vision is an important part of the interdisciplinary
+field of robotics. Developers of programming systems in general and machine
+vision software in particular face the challenge of bringing together
+\begin{itemize}
+  \item performance
+  \item productivity
+  \item generality
+\end{itemize}
+in a single architecture (see \fig{triangle}).
+\begin{figure}[htbp]
+   \begin{center}
+     \resizebox{.5\columnwidth}{!}{\includegraphics{wedekind_20131110_f01}}\\
+     \caption{The main requirements when designing a programming language or
+     system \citep{wolczko2011}\label{fig:triangle}}
+   \end{center}
+\end{figure}
+
+Scripting languages offer a great productivity advantage and the productivity
+of programmer's measured in \ac{LOC} per hour seems to be independent of the
+programming language\citep{prechelt2000empirical}. However performance is
+critical when implementing a computer vision system. \emph{I.e.} when
+prototyping a computer vision system using a scripting language such as Octave
+(productivity \& generality), it is usually necessary to later port it to a
+compiled language such as C/C++ (performance \& generality) to implement the
+final system.
+
+Today's desktop software is dominated by complex software systems which cannot
+be understood by a single person any more. However most of this complexity can
+be shown to be "accidental" rather than inherent\citep{ohshima2013kscript}.
+Using \acp{DSL}, one can keep the size of software systems (measured in LOC)
+\emph{orders of magnitudes} smaller and thus more
+manageable\citep{kay2010steps}.
+
+In this paper we are going to show how the Ruby programming language (which has
+strong support for DSLs) can help to reduce accidental complexity when
+implementing real-time computer vision software.
+
+\section{Ruby Programming Language}
+The Ruby programming language\footnote{\url{http://www.ruby-lang.org/}} is an
+\emph{interpreted language}. It uses a \emph{mark-and-sweep} garbage collector
+for memory management. Important features of the programming language are
+\begin{itemize}
+  \item \emph{late binding}
+  \item \emph{closures}
+  \item \emph{exception handling}
+  \item \emph{continuations}
+  \item \emph{open classes}
+\end{itemize}
+
+Ruby has support for \textbf{meta-programming}. In particular
+\begin{itemize}
+  \item \code{methods} returns an object's list of available methods
+  \item \code{define\_method} defines a method at runtime
+  \item \code{method\_missing} traps calls to nonexistent methods
+  \item \code{send} dynamically calls a method
+\end{itemize}
+
+\ac{MRI} (the reference implementation of Ruby) comes with tool called the
+\ac{IRB}. \ac{IRB} is a \ac{REPL} for the Ruby programming language. \lst{repl}
+shows an example of an \ac{IRB} session. Comment lines (preceded with \code{\#}) show the output of the interpreter.
+\begin{listing}[htbp]
+  \begin{minted}[fontsize=\footnotesize]{ruby}
+class Point
+  attr_reader :x, :y
+  def initialize x, y
+    @x, @y = x, y
+  end
+  def inspect
+    "Point(#{@x}, #{@y})"
+  end
+end
+# nil
+def Point x, y
+  Point.new x, y
+end
+# nil
+Point 1, 2
+# Point(1, 2)
+Point(1, 2).inspect
+# "Point(1, 2)"
+  \end{minted}
+  \caption{The role of inspect methods when using the Interactive Ruby
+  Shell\label{lst:repl}}
+\end{listing}
+
+The \ac{IRB} session shown in \lst{repl} illustrates an important feature of
+Ruby: After evaluation the interpreter calls the \code{inspect} method of the
+result in order to display it. \emph{I.e.} the user can control the way an
+object is displayed by implementing the \code{inspect} method.
+
+\lst{closure} demonstrates how closures facilitate the implementation of custom
+control structures. The method \code{repeat} applies the closure \code{action}
+$10$ times to the argument $1.0$. Note that the closure has access to
+the variable \code{seed} while the method \code{repeat} does not.
+\begin{listing}[htbp]
+  \begin{minted}[fontsize=\footnotesize]{ruby}
+def repeat n, x, &action
+  if n.zero?
+    x
+  else
+    repeat n - 1, action.call(x), &action
+  end
+end
+# nil
+seed = 2
+# 2
+repeat(10, 1.0) { |x| 0.5 * (x + seed / x) }
+# 1.414213562373095
+  \end{minted}
+  \caption{Implementing custom control structure using a
+  closure\label{lst:closure}}
+\end{listing}
+
+As mentioned earlier, Ruby implements \emph{open classes}. \emph{I.e.} after
+having defined the class \code{Point} as shown in \lst{repl}, one can still add
+methods (\emph{e.g.} scalar multiplication) to the class (see \lst{openclass}).
+\begin{listing}[htbp]
+  \begin{minted}[fontsize=\footnotesize]{ruby}
+class Point
+  def - c
+    Point @x - c, @y - c
+  end
+end
+# nil
+Point(3, 4) - 2
+# Point(1, 2)
+  \end{minted}
+  \caption{Ruby implements open classes\label{lst:openclass}}
+\end{listing}
+
+The Ruby standard library supports various numerical datatypes (\emph{e.g.}
+complex numbers, rational numbers). It also implements \emph{coercions} to
+facilitate binary operations involving custom datatypes. \lst{coerce} shows how
+to implement \code{Point\#coerce} in order to implement binary operations where
+the custom data type \code{Point} is the second argument.
+\begin{listing}[htbp]
+  \begin{minted}[fontsize=\footnotesize]{ruby}
+class Point
+  class Scalar
+    def initialize c
+      @c = c
+    end
+    def - point
+      Point @c - point.x, @c - point.y
+    end
+  end
+  def coerce c
+    [Scalar.new(c), self]
+  end
+end
+# nil
+6 - Point(5, 4)
+# Point(1, 2)
+  \end{minted}
+  \caption{Coercions for custom numeric datatypes\label{lst:coerce}}
+\end{listing}
+
+\section{Representing native types}
+Ruby uses
+\begin{itemize}
+  \item \code{Fixnum} to represent small numbers
+  \item \code{Bignum} to represent big numbers
+\end{itemize}
+as appropriate.  \emph{I.e.} when multiplying two small numbers, the result can
+be a big number. However the standard library provides the methods
+\code{Array\#pack} and \code{String\#unpack} in order to convert numerical
+objects to a string with the native representation and back. \emph{E.g.}
+\lst{pack} shows packing and unpacking of an 8-bit integer, a 32-bit signed
+integer, and a single-precision floating-point number. The string \code{Cif} is
+used to specify the native types to use when packing/unpacking.
+\begin{listing}[htbp]
+  \begin{minted}[fontsize=\footnotesize]{ruby}
+s = [25, -123, Math::PI].pack('Cif')
+# "\x19\x85\xFF\xFF\xFF\xDB\x0FI@"
+s.unpack 'Cif'
+# [25, -123, 3.1415927410125732]
+  \end{minted}
+  \caption{Packing/unpacking native representations of numerical
+  objects\label{lst:pack}}
+\end{listing}
+
+While Ruby strings are sufficient to represent native data, they incur an
+unnecessary overhead and in particular they don't support sharing of memory and
+pointer operations (\emph{i.e.} sharing of data). Therefore a Ruby native
+extension was implemented which defines the class \code{Malloc}. \code{Malloc}
+objects allow one to see a chunk of memory as an array of cubbyholes, each
+containing an 8-bit character (similar as \code{vector-ref} in
+Scheme~\citep{abelson1996structure})\citep{thesis_wedekind}. Note that the
+implementation records the size of each memory object and it also registers the
+dependencies between the memory objects with the Ruby garbage collector. Thus
+the implementation does not suffer from buffer overflows or dangling pointers.
+Attempts to overrun the buffer's boundary are detected and an exception
+(\emph{i.e.} \code{RuntimeError}) is raised as shown in \lst{malloc}.
+\begin{listing}[htbp]
+  \begin{minted}[fontsize=\footnotesize]{ruby}
+m = Malloc.new 8
+# Malloc(8)
+m.write [2, 3, 5, 7, 11, 13, 17, 19].pack('C' * 8)
+# "\x02\x03\x05\a\v\r\x11\x13"
+(m + 5 * 1).read(1).unpack 'C'
+# [13]
+(m + 8 * 1).read(1).unpack 'C'
+# RuntimeError: Only 0 bytes of memory left to read ...
+  \end{minted}
+  \caption{Introducing pointer arithmetic into Ruby\label{lst:malloc}}
+\end{listing}
+
+One can easily implement a class \code{INT} for representing native integers in
+Ruby\citep{w2009}. By implementing the \code{inspect} method and by
+implementing the operators \code{[]} and \code{[]=} one can achieve the
+behaviour shown in \lst{wrap}.
+\begin{listing}[htbp]
+  \begin{minted}[fontsize=\footnotesize]{ruby}
+i = INT.new
+# INT(3)
+i[] = 5
+# 5
+i
+# INT(5)
+i[]
+# 5
+  \end{minted}
+  \caption{Behaviour of object representing a native integer\label{lst:wrap}}
+\end{listing}
+However as shown in \tbl{scalars} there are quite a few native scalar types and
+composite types which potentially need to be supported. Therefore a more
+generic approach is desirable.
+\begin{table}[htbp]
+  \begin{center}
+    \caption{Native numerical types\label{tbl:scalars}}
+    \begin{tabular}{llc}\toprule
+    \textbf{type name} &
+    \textbf{description} &
+    \textbf{formal notation}\\\midrule
+    BOOL      & boolean                  & $\mathbb{B}$\\
+    UBYTE     & 8-bit unsigned integer   & $\{0,\ldots,2^8-1\}$\\
+    BYTE      & 8-bit signed integer     & $\{-2^7,\ldots,2^7-1\}$\\
+    USINT     & 16-bit unsigned integer  & $\{0,\ldots,2^{16}-1\}$\\
+    SINT      & 16-bit signed integer    & $\{-2^{15},\ldots,2^{15}-1\}$\\
+    \multicolumn{1}{c}{$\vdots$} & \multicolumn{1}{c}{$\vdots$} & $\vdots$\\
+    SFLOAT    & single-precision floating point & $\mathbb{R}$\\
+    DFLOAT    & double-precision floating point & $\mathbb{R}$\\
+    UBYTERGB  & 8-bit unsigned RGB       & $\{0,\ldots,2^8-1\}^3$\\
+    BYTERGB   & 8-bit signed RGB         & $\{-2^7,\ldots,2^7-1\}^3$\\
+    USINTRGB  & 16-bit unsigned RGB      & $\{0,\ldots,2^{16}-1\}^3$\\
+    SINTRGB   & 16-bit signed RGB        & $\{-2^{15},\ldots,2^{15}-1\}^3$\\
+    \multicolumn{1}{c}{$\vdots$} & \multicolumn{1}{c}{$\vdots$} & $\vdots$\\
+    SFLOATRGB & single-precision RGB     & $\mathbb{R}^3$\\
+    DFLOATRGB & double-precision RGB     & $\mathbb{R}^3$\\
+    SCOMPLEX  & single-precision complex & $\mathbb{C}$\\
+    DCOMPLEX  & double-precision complex & $\mathbb{C}$\\\bottomrule
+    \end{tabular}
+  \end{center}
+\end{table}
+
+\begin{listing}[htbp]
+  \begin{minted}[fontsize=\footnotesize]{ruby}
+class INT_
+  class << self
+    attr_accessor :bits
+    attr_accessor :signed
+  end
+  # constructor, inspect method, ...
+end
+# nil
+SIGNED   = true
+# true
+UNSIGNED = false
+# false
+def INT bits, signed
+  retval = Class.new INT_
+  retval.bits = bits
+  retval.signed = signed
+  retval
+end
+# nil
+  \end{minted}
+  \caption{Implementation of a generic native scalar\label{lst:generic}}
+\end{listing}
+
+\begin{listing}[htbp]
+  \begin{minted}[fontsize=\footnotesize]{ruby}
+USINT = INT 16, UNSIGNED
+# USINT
+u = USINT.new 3
+# USINT(3)
+v = USINT.new u.malloc
+# USINT(3)
+  \end{minted}
+  \caption{Behaviour of generic native scalar (see
+  \lst{generic})\label{lst:gentest}}
+\end{listing}
+% ------------------------------------------------------------------------------
+
+% Type classes (template classes)
+% Malloc objects
+
+\begin{figure}[htbp]
+  \begin{center}
+    \resizebox{\columnwidth}{!}{\includegraphics{wedekind_20131110_f02}}\\
+    \caption{Element types\label{fig:types}}
+  \end{center}
+\end{figure}
+
+
+\begin{figure}[htbp]
+   \begin{center}
+     \resizebox{\columnwidth}{!}{\includegraphics{wedekind_20131110_f03}}\\
+     \caption{Example of array type\label{fig:image}}
+   \end{center}
+\end{figure}
+
+
+\begin{footnotesize}
+\begin{itemize}
+  \item down to the metal, instead of bindings
+  \item unit testing,
+  \item empirical evidence for productivity (LOC, structural complexity),
+    reuse, maintainability
+  \item theoretical contribution: generic operations, more fundamental
+    understanding of computer vision
+  \item (Const.new) MRI: single threaded (JRuby?, Rubinius?), meta-programming
+    does not cover control statements (while, if, ...)
+  \item Why not just ...?  Decision diagram: Lush, C++ class, C struct (OpenCV)
+    \begin{itemize}
+      \item simple method names (without types)
+      \item only instantiate required/valid methods (unlike C++ templates)
+      \item operations supported for arbitrary number of dimensions
+      \item performance
+      \item support for arbitrary type-combinations (in NArray/C++ not
+        impossible but it is easier to work around those limitations)
+    \end{itemize}
+  \item value: Ruby object of matching type
+  \item pointers (value: Malloc)
+  \item variables, lambda, lookup, element-wise, ... (optimised building
+    blocks) $\leftrightarrow$ Lambda calculus (minimal)
+  \item Shared definitions for datatypes (images) are in Ruby and *not* in
+    C/C++ $\rightarrow$ no static datatype imposed on the software, dynamic
+    Ruby datastructures can be used in C/C++ using Ruby's native interface
+  \item Integration (e.g. RMagick) using open classes,
+    reuse/adaptation/reengineering of existing software artifacts.
+  \item JIT compilation (using GCC): fetch, construct, store, coerce, coercion,
+    descriptor, dup, compilable?, strip, get, assign, write, storage\_size,
+    memory\_type, default, inspect
+  \item fast development cycle
+  \item maximally generic (binary operations (no subset of integer types),
+    histograms, tensor operations, luts/warps, map (unary operation), inject,
+    mask/unmask (larrabee), integral, convolution)
+  \item Software architecture based on memory objects (Malloc) allows
+    integration (no C++ "static" types).
+  \item Requirements: generic operators on n-dimensional arrays, high
+    performance, binary operations on any element-type (including array),
+    generic operators instead of monolithic implementations
+  \item Ruby allows for functional testing
+  \item Using closures during camera initialisation and for displaying videos
+  \item When appropriate, authors are encouraged to demonstrate the utility of
+    their work on significant problems
+  \item Integration of existing I/O libraries: ALSA, DC1394, FFMpeg, Kinect,
+    OpenEXR, Qt4, RMagick, V4L2, Xorg
+  \item Integration with other libraries: FFTW3, libswscale, linalg, narray,
+    opencv
+  \item Utility of the work: TODO
+  \item Racket, Clojure, Factor, STEPS project
+\end{itemize}
+\end{footnotesize}
+
+\section{Conclusion}
+% Typical functions of the conclusion of a scientific paper include 1)
+% summing up, 2) a statement of conclusions, 3) a statement of
+% recommendations, and 4) a graceful termination. Any one of these, or
+% any combination, may be appropriate for a particular paper. Some
+% papers do not need a separate concluding section, particularly if
+% the conclusions have already been stated in the introduction.
+
+% \subsection{Initial Submission}
+% Articles may be accompanied by online supplemental material.
+% (Note: if an online appendix contains source code, we will require
+% you to sign a release form prior to publication freeing us from
+% liability.)
+%
+% \begin{enumerate}
+%     \item a single source file author\_yyyymmdd.tex; do not include external
+%     .tex files; use the submission date
+%     \item the bibliography file author\_yyyymmdd.bib (only for BibTeX users)
+%     \item the collection of figures as jpg or png files
+%     author\_yyyymmdd\_f01.jpg, \_f02.jpg, etc.
+%     \item the output file author\_yyyymmdd.pdf
+% \end{enumerate}
+%
+% \section{Manuscript preparation}
+% Manuscripts should include the following parts: title, authors$'$
+% names, authors$'$ affiliations, abstract, keywords, text,
+% acknowledgments (if necessary), collected references (e.g.
+% ~\cite{IJSEK1996:Stewart, SEER2007:Vaughan, ROBIO2006:Friedmann,
+% SIMPAR2008:Petters} and ~\cite{JARS2006:Colon, IJAR2001:Zielinski,
+% IEEE-TSE1997:Stewart, ICIAS2008:Spexard,
+% IROS2003:Montemerlo}), short
+% biography and the photographs of every author (above 600 dpi),
+% tables and figures (above 600 dpi). Supplemental material should
+% be briefly described in section "Appendixes".
+%
+\section*{Acknowledgments}
+The authors would like to thank...
+
+% references section
+\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+\bibliography{IEEEabrv,wedekind_20131110}
+
+
+% biography section
+\begin{IEEEbiography}[{wedekind_20131110_f06}]{Jan Wedekind}
+received his diploma in computer science from the University of Karlsruhe
+in 2002, and a PhD in computer vision from Sheffield Hallam University
+in 2012. From 2002 to 2004 he developed image processing software at
+Carl Zeiss SMT AG. Between 2004 to 2012 he was part-time research associate
+and part-time PhD student in the Microsystems \& Machine Vision Laboratory
+(MMVL) at Sheffield Hallam University. Since 2012 he is a GUI software developer
+at Digital Science in London. He has published several refereed conference
+papers and he has given presentations at OSCON and RubyConf.  Dr. Wedekind's
+research interests are computer vision, robotics, and programming languages.
+\end{IEEEbiography}
+
+\begin{IEEEbiography}[{wedekind_20131110_f05}]{Georgios Chliveros}
+received his PhD in Pattern Recognition from Sheffield Hallam University (SHU)
+in 2005. His undergraduate studies were on instrumentation systems and
+his postgraduate studies on industrial statistics.
+He was a researcher in robotics at the Materials and Engineering Research Institute, SHU
+from 2004 to 2011. Currently he is a research engineer in machine vision and robotics at
+the Foundation for Research and Technology Hellas (ICS-FORTH).
+His research interests are on robotic systems and
+computational engineering methods.
+He is a member of the IET, UK and fellow of the RSS, UK.
+\end{IEEEbiography}
+
+\begin{IEEEbiography}[{wedekind_20131110_f04}]{Balasundram P. Amavasai}
+received his B.\,Sc. and
+M.\,Sc. degrees in mechanical engineering from the *** University,
+in 1977 and 1984, respectively, and the Ph.\,D. degree in
+computing from *** University, in 1992. In 1994, he was a
+faculty member at *** University and in 1996 at ***
+University. Currently, he is a professor in the Department of
+Information System Engineering at *** University.
+He has published about 100 refereed journal and conference papers.
+His research interest covers robotics, software engineering, and distributed
+systems.
+Prof. Author received research award from Science Foundation, and
+the Best Paper Award of the XX International Conference in 2000 and
+2006, respectively. He is a member of ACM and IEEE.
+\end{IEEEbiography}
+
+% insert where needed to balance the two columns on the last page with
+% biographies
+
+% You can push biographies down or up by placing
+% a \vfill before or after them. The appropriate
+% use of \vfill depends on what kind of text is
+% on the last page and whether or not the columns
+% are being equalized.
+
+\vfill
+
+% Can be used to pull up biographies so that the bottom of the last one
+% is flush with the other column.
+%\enlargethispage{-5in}
+
+% that's all folks
+\end{document}

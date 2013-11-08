@@ -1,0 +1,70 @@
+digraph int {
+  margin = 0;
+  nodesep = 0.4;
+  rankdir = LR;
+  node [style = filled];
+  splines = false;
+  BOOL;
+  OBJECT;
+  BYTE -> 8;
+  BYTE -> SIGNED;
+  UBYTE -> 8;
+  UBYTE -> UNSIGNED;
+  SINT -> 16;
+  SINT -> SIGNED;
+  USINT -> 16;
+  USINT -> UNSIGNED;
+  INT -> 32;
+  INT -> SIGNED;
+  UINT -> 32;
+  UINT -> UNSIGNED;
+  LONG -> 64;
+  LONG -> SIGNED;
+  ULONG -> 64;
+  ULONG -> UNSIGNED;
+  SFLOAT -> SINGLE;
+  DFLOAT -> DOUBLE;
+  SCOMPLEX -> SFLOAT;
+  DCOMPLEX -> DFLOAT;
+  UBYTERGB -> UBYTE;
+  USINTRGB -> USINT;
+  UINTRGB -> UINT;
+  ULONGRGB -> ULONG;
+  SFLOATRGB -> SFLOAT;
+  DFLOATRGB -> DFLOAT;
+  subgraph clustersign {
+    SIGNED; UNSIGNED;
+    label="sign";
+    graph[style=dotted];
+  }
+  subgraph clusterbits {
+    8; 16; 32; 64;
+    label="# bits";
+    graph[style=dotted];
+  }
+  subgraph clusterprec {
+    SINGLE; DOUBLE;
+    label="precision";
+    graph[style=dotted];
+  }
+  subgraph clusterint {
+    BYTE; UBYTE; SINT; USINT; INT; UINT; LONG; ULONG;
+    label="integer";
+    graph[style=dotted];
+  }
+  subgraph clusterfloat {
+    SFLOAT; DFLOAT;
+    label="floating-point";
+    graph[style=dotted];
+  }
+  subgraph clustercomplex {
+    SCOMPLEX; DCOMPLEX;
+    label="complex";
+    graph[style=dotted];
+  }
+  subgraph clusterrgb {
+    UBYTERGB; USINTRGB; UINTRGB; ULONGRGB; SFLOATRGB; DFLOATRGB;
+    label="RGB";
+    graph[style=dotted];
+  }
+}
