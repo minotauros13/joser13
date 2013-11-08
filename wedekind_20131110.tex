@@ -371,34 +371,72 @@ i[]
 \end{listing}
 However as shown in \tbl{scalars} there are quite a few native scalar types and
 composite types which potentially need to be supported. Therefore a more
-generic approach is required.
+generic approach is desirable.
 \begin{table}[htbp]
   \begin{center}
     \caption{Native numerical types\label{tbl:scalars}}
     \begin{tabular}{llc}\toprule
-    \textbf{type} &
+    \textbf{type name} &
     \textbf{description} &
-    \parbox[t]{.2\columnwidth}{\textbf{mathematical definition}}\\\midrule
-    BOOL     & boolean                 & $\mathbb{B}$\\
-    UBYTE    & 8-bit unsigned integer  & $\{0,\ldots,2^8-1\}$\\
-    BYTE     & 8-bit signed integer    & $\{-2^7,\ldots,2^7-1\}$\\
-    USINT    & 16-bit unsigned integer & $\{0,\ldots,2^{16}-1\}$\\
-    SINT     & 16-bit signed integer   & $\{-2^{15},\ldots,2^{15}-1\}$\\
+    \textbf{formal notation}\\\midrule
+    BOOL      & boolean                  & $\mathbb{B}$\\
+    UBYTE     & 8-bit unsigned integer   & $\{0,\ldots,2^8-1\}$\\
+    BYTE      & 8-bit signed integer     & $\{-2^7,\ldots,2^7-1\}$\\
+    USINT     & 16-bit unsigned integer  & $\{0,\ldots,2^{16}-1\}$\\
+    SINT      & 16-bit signed integer    & $\{-2^{15},\ldots,2^{15}-1\}$\\
     \multicolumn{1}{c}{$\vdots$} & \multicolumn{1}{c}{$\vdots$} & $\vdots$\\
     SFLOAT    & single-precision floating point & $\mathbb{R}$\\
     DFLOAT    & double-precision floating point & $\mathbb{R}$\\
-    UBYTERGB & 8-bit unsigned RGB      & $\{0,\ldots,2^8-1\}^3$\\
-    BYTERGB  & 8-bit signed RGB        & $\{-2^7,\ldots,2^7-1\}^3$\\
-    USINTRGB & 16-bit unsigned RGB     & $\{0,\ldots,2^{16}-1\}^3$\\
-    SINTRGB  & 16-bit signed RGB       & $\{-2^{15},\ldots,2^{15}-1\}^3$\\
+    UBYTERGB  & 8-bit unsigned RGB       & $\{0,\ldots,2^8-1\}^3$\\
+    BYTERGB   & 8-bit signed RGB         & $\{-2^7,\ldots,2^7-1\}^3$\\
+    USINTRGB  & 16-bit unsigned RGB      & $\{0,\ldots,2^{16}-1\}^3$\\
+    SINTRGB   & 16-bit signed RGB        & $\{-2^{15},\ldots,2^{15}-1\}^3$\\
     \multicolumn{1}{c}{$\vdots$} & \multicolumn{1}{c}{$\vdots$} & $\vdots$\\
-    SFLOATRGB & single-precision RGB   & $\mathbb{R}^3$\\
-    DFLOATRGB & double-precision RGB   & $\mathbb{R}^3$\\
+    SFLOATRGB & single-precision RGB     & $\mathbb{R}^3$\\
+    DFLOATRGB & double-precision RGB     & $\mathbb{R}^3$\\
     SCOMPLEX  & single-precision complex & $\mathbb{C}$\\
     DCOMPLEX  & double-precision complex & $\mathbb{C}$\\\bottomrule
     \end{tabular}
   \end{center}
 \end{table}
+
+\begin{listing}[htbp]
+  \begin{minted}[fontsize=\footnotesize]{ruby}
+class INT_
+  class << self
+    attr_accessor :bits
+    attr_accessor :signed
+  end
+  # constructor, inspect method, ...
+end
+# nil
+SIGNED   = true
+# true
+UNSIGNED = false
+# false
+def INT bits, signed
+  retval = Class.new INT_
+  retval.bits = bits
+  retval.signed = signed
+  retval
+end
+# nil
+  \end{minted}
+  \caption{Implementation of a generic native scalar\label{lst:generic}}
+\end{listing}
+
+\begin{listing}[htbp]
+  \begin{minted}[fontsize=\footnotesize]{ruby}
+USINT = INT 16, UNSIGNED
+# USINT
+u = USINT.new 3
+# USINT(3)
+v = USINT.new u.malloc
+# USINT(3)
+  \end{minted}
+  \caption{Behaviour of generic native scalar (see
+  \lst{generic})\label{lst:gentest}}
+\end{listing}
 % ------------------------------------------------------------------------------
 
 % Type classes (template classes)
