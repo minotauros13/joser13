@@ -165,8 +165,8 @@ in a single architecture (see \fig{triangle}).
 Scripting languages offer a great productivity advantage and the productivity
 of programmer's measured in \ac{LOC} per hour seems to be independent of the
 programming language\citep{prechelt2000empirical}. However performance is
-critical when implementing a machine vision system. \emph{I.e.} when
-prototyping a machine vision system using a scripting language such as Octave
+critical when implementing a computer vision system. \emph{I.e.} when
+prototyping a computer vision system using a scripting language such as Octave
 (productivity \& generality), it is usually necessary to later port it to a
 compiled language such as C/C++ (performance \& generality) to implement the
 final system.
@@ -180,7 +180,7 @@ manageable\citep{kay2010steps}.
 
 In this paper we are going to show how the Ruby programming language (which has
 strong support for DSLs) can help to reduce accidental complexity when
-implementing real-time machine vision software.
+implementing real-time computer vision software.
 
 \section{Ruby Programming Language}
 The Ruby programming language\footnote{\url{http://www.ruby-lang.org/}} is an
@@ -353,9 +353,9 @@ m.write [2, 3, 5, 7, 11, 13, 17, 19].pack('C' * 8)
 \end{listing}
 
 One can easily implement a class \code{INT} for representing native integers in
-Ruby. By implementing the \code{inspect} method and by implementing the
-operators \code{[]} and \code{[]=} one can achieve the behaviour shown in
-\lst{wrap}.
+Ruby\citep{w2009}. By implementing the \code{inspect} method and by
+implementing the operators \code{[]} and \code{[]=} one can achieve the
+behaviour shown in \lst{wrap}.
 \begin{listing}[htbp]
   \begin{minted}[fontsize=\footnotesize]{ruby}
 i = INT.new
