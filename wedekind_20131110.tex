@@ -226,7 +226,8 @@ Point 1, 2
 Point(1, 2).inspect
 # "Point(1, 2)"
   \end{minted}
-  \caption{The role of inspect methods when using IRB\label{lst:repl}}
+  \caption{The role of inspect methods when using the Interactive Ruby
+  Shell\label{lst:repl}}
 \end{listing}
 
 The \ac{IRB} session shown in \lst{repl} illustrates an important feature of
@@ -301,7 +302,59 @@ end
   \caption{Coercions for custom numeric datatypes\label{lst:coerce}}
 \end{listing}
 
-\section{$\ldots$}
+\section{Representing native types}
+Ruby uses
+\begin{itemize}
+  \item \code{Fixnum} to represent small numbers
+  \item \code{Bignum} to represent big numbers
+\end{itemize}
+as appropriate.  \emph{I.e.} when multiplying two small numbers, the result can
+be a big number. However the standard library provides the methods
+\code{Array\#pack} and \code{String\#unpack} in order to convert numerical
+objects to a string with the native representation and back. \emph{E.g.}
+\lst{pack} shows packing and unpacking of an 8-bit integer, a 32-bit signed
+integer, and a single-precision floating-point number. The string \code{Cif} is
+used to specify the native types to use when packing/unpacking.
+\begin{listing}[htbp]
+  \begin{minted}[fontsize=\footnotesize]{ruby}
+s = [25, -123, Math::PI].pack('Cif')
+# "\x19\x85\xFF\xFF\xFF\xDB\x0FI@"
+s.unpack 'Cif'
+# [25, -123, 3.1415927410125732]
+  \end{minted}
+  \caption{Packing/unpacking native representations of numerical
+  objects\label{lst:pack}}
+\end{listing}
+
+While Ruby strings are sufficient to represent native data, they incur an
+unnecessary overhead and in particular they don't support sharing of memory and
+pointer operations (\emph{i.e.} sharing of data). Therefore a Ruby native
+extension was implemented which defines the class \code{Malloc}. \code{Malloc}
+objects allow one to see a chunk of memory as an array of cubbyholes, each
+containing an 8-bit character (similar as \code{vector-ref} in
+Scheme~\citep{abelson1996structure})\citep{thesis_wedekind}. Note that the
+implementation records the size of each memory object and it also registers the
+dependencies between the memory objects with the Ruby garbage collector. Thus
+the implementation does not suffer from buffer overflows or dangling pointers.
+Attempts to overrun the buffer's boundary are detected and an exception
+(\emph{i.e.} \code{RuntimeError}) is raised as shown in \lst{malloc}.
+% ------------------------------------------------------------------------------
+\begin{listing}[htbp]
+  \begin{minted}[fontsize=\footnotesize]{ruby}
+m = Malloc.new 8
+# Malloc(8)
+m.write [2, 3, 5, 7, 11, 13, 17, 19].pack('C' * 8)
+# "\x02\x03\x05\a\v\r\x11\x13"
+(m + 5 * 1).read(1).unpack 'C'
+# [13]
+(m + 8 * 1).read(1).unpack 'C'
+# RuntimeError: Only 0 bytes of memory left to read ...
+
+  \end{minted}
+  \caption{Introducing pointer arithmetic into Ruby\label{lst:malloc}}
+\end{listing}
+% Malloc objects
+
 \begin{figure}[htbp]
    \begin{center}
      \resizebox{\columnwidth}{!}{\includegraphics{wedekind_20131110_f02}}\\
@@ -309,12 +362,15 @@ end
    \end{center}
 \end{figure}
 
+% The code for packing/unpacking objects can be encapsulated
+
 \begin{figure}[htbp]
    \begin{center}
      \resizebox{\columnwidth}{!}{\includegraphics{wedekind_20131110_f03}}\\
      \caption{Example of array type\label{fig:image}}
    \end{center}
 \end{figure}
+
 
 \begin{footnotesize}
 \begin{itemize}
@@ -368,8 +424,6 @@ end
   \item Racket, Clojure, Factor, STEPS project
 \end{itemize}
 \end{footnotesize}
-
-\section{$\ldots$}
 
 \section{Conclusion}
 % Typical functions of the conclusion of a scientific paper include 1)
